@@ -1,360 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your ZENITH Score | Praposhan</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy-deep: #0e1220;
-    --navy-mid: #171c30;
-    --gold: #c9a24a;
-    --gold-soft: #e3c98a;
-    --gold-dim: #7a6636;
-    --cream: #f3ede0;
-    --muted: #9aa0b4;
-    --line: rgba(201, 162, 74, 0.18);
+function onFormSubmit(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Form Responses 1');
+  var row = e.range.getRow();
+  var v = e.values;
+  // v[0]=timestamp, v[1]=Full name, v[2]=Email, v[3]=Phone, v[4]=Country,
+  // v[5..11]=Q1..Q7 (Sleep Architecture), v[12..17]=Q8..Q13 (Daily Inputs),
+  // v[18]=Q14, v[19]=Q15 (Safety), v[20..25]=Q16..Q21 (Recovery/Performance),
+  // v[26..28]=Q22..Q24 (About You)
+  // *** If your column order differs from this, tell me the exact order and I'll re-map it. ***
+
+  // Prefixes only — robust to minor wording changes in the live form
+  var OPT = {
+    Q1:  ["Under 15","15 to 30","30 to 60","More than 60"],
+    Q2:  ["More than 7","6 to 7","5 to 6","Less than 5"],
+    Q3:  ["Almost all","Most of it","About half","Less than half"],
+    Q4:  ["Never or rarely","Less than once","Once or twice","Three or more"],
+    Q5:  ["Never or rarely","Less than once","Once or twice","Three or more"],
+    Q6:  ["Very good","Fairly good","Fairly bad","Very bad"],
+    Q7:  ["Not at all","A little","Somewhat","Very much"],
+    Q8:  ["Every day","Most days","A few times","Rarely or never"],
+    Q9:  ["Before noon","Between noon and 2","Between 2 PM and 4","After 4 PM"],
+    Q10: ["More than 3 hours","2 to 3 hours","1 to 2 hours","Within 1 hour"],
+    Q11: ["Never or very rarely","Once a week","A few times a week","Most evenings"],
+    Q12: ["Screens off","Mostly calm","Usually on screens","I rely on alcohol"],
+    Q13: ["Manageable","Moderate","High","Overwhelming"],
+    Q14: ["Not at all","Several days","More than half","Nearly every day"],
+    Q15: ["Not at all","Several days","More than half","Nearly every day"],
+    Q16: ["Fully recovered","Mostly recovered","Partially recovered","Unrecovered"],
+    Q17: ["Consistent","Morning strong","Significant afternoon crash","Low all day"],
+    Q18: ["Good","Mild tension","Regular physical fatigue","Persistent physical exhaustion"],
+    Q19: ["4 or more hours","2 to 4 hours","1 to 2 hours","Less than 1 hour"],
+    Q20: ["Sharp","Mostly sharp","Noticeably impaired","Significantly foggy"],
+    Q21: ["Strong","Generally stable","Compromised","Significantly affected"]
+  };
+
+  function score(qKey, answerIndex) {
+    var answer = (v[answerIndex] || '').toString().trim();
+    var prefixes = OPT[qKey];
+    for (var i = 0; i < prefixes.length; i++) {
+      if (answer.indexOf(prefixes[i]) === 0) return i; // A=0, B=1, C=2, D=3
+    }
+    return 0; // fallback if no match found — check logs if this fires often
   }
 
-  * { box-sizing: border-box; }
+  var name = v[1] || 'there';
+  var email = v[2];
 
-  body {
-    margin: 0;
-    background: var(--navy-deep);
-    color: var(--cream);
-    font-family: 'Manrope', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    padding: 48px 20px 80px;
+  // ===== SAFETY CHECK (overrides everything) =====
+  var q14Score = score('Q14', 18);
+  var q15Score = score('Q15', 19);
+  var isSafetyFlag = (q14Score === 3) || (q15Score === 3);
+
+  if (isSafetyFlag) {
+    var safetySubject = 'Your ZENITH Score assessment — next step';
+    var safetyBody = 'Hi ' + name + ',\n\n'
+      + 'Thank you for answering honestly.\n\n'
+      + 'Based on what you shared, we want to make sure you have the right support before starting a performance program. '
+      + 'Praposhan works most effectively alongside — not instead of — professional mental health support. '
+      + 'We would encourage you to speak with your physician or a licensed therapist first.\n\n'
+      + 'Once you have that foundation in place, we would genuinely love to work with you. '
+      + 'You can return and book a consultation at any time.\n\n'
+      + 'Find a therapist: https://www.psychologytoday.com\n'
+      + 'Join the waitlist: [your waitlist link]\n\n'
+      + 'If you are in crisis, please call or text 988.\n'
+      + 'Praposhan is a lifestyle coaching platform and is not a medical provider. This assessment does not constitute a clinical diagnosis.\n\n'
+      + '— Praposhan';
+    if (email) GmailApp.sendEmail(email, safetySubject, safetyBody);
+    sheet.getRange(row, v.length + 1).setValue('SAFETY_FLAG');
+    return;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-  }
+  // ===== SCORING =====
+  var saSum = score('Q1',5)+score('Q2',6)+score('Q3',7)+score('Q4',8)+score('Q5',9)+score('Q6',10)+score('Q7',11);
+  var liSum = score('Q8',12)+score('Q9',13)+score('Q10',14)+score('Q11',15)+score('Q12',16)+score('Q13',17);
+  var opSum = score('Q16',20)+score('Q17',21)+score('Q18',22)+score('Q19',23)+score('Q20',24)+score('Q21',25);
 
-  .page { width: 100%; max-width: 640px; }
+  var SA = ((21 - saSum) / 21) * 100;
+  var LI = ((18 - liSum) / 18) * 100;
+  var OP = ((18 - opSum) / 18) * 100;
 
-  .eyebrow {
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    text-align: center;
-    margin-bottom: 10px;
-    font-weight: 600;
-  }
+  var inputScore = (SA * 0.60) + (LI * 0.40);
+  var zenith = Math.round((inputScore * 0.55) + (OP * 0.45));
 
-  h1.brand {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(26px, 5vw, 34px);
-    text-align: center;
-    margin: 0 0 4px;
-    letter-spacing: -0.01em;
-  }
-
-  .tagline {
-    text-align: center;
-    color: var(--muted);
-    font-size: 14px;
-    margin-bottom: 44px;
-    font-style: italic;
-  }
-
-  .greeting {
-    text-align: center;
-    font-size: 16px;
-    color: var(--cream);
-    margin-bottom: 6px;
-  }
-
-  .greeting strong { color: var(--gold-soft); }
-
-  /* Sunrise gauge — signature element */
-  .gauge-wrap {
-    position: relative;
-    width: 260px;
-    height: 260px;
-    margin: 28px auto 8px;
-  }
-
-  svg.gauge { width: 100%; height: 100%; transform: rotate(-90deg); }
-
-  .gauge-track {
-    fill: none;
-    stroke: rgba(255,255,255,0.06);
-    stroke-width: 14;
-  }
-
-  .gauge-fill {
-    fill: none;
-    stroke: url(#riseGradient);
-    stroke-width: 14;
-    stroke-linecap: round;
-    stroke-dasharray: 691.15;
-    stroke-dashoffset: 691.15;
-    animation: rise 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    animation-delay: 0.3s;
-  }
-
-  .gauge-center {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .score-num {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 56px;
-    line-height: 1;
-    color: var(--gold-soft);
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards;
-    animation-delay: 1.4s;
-  }
-
-  .score-max {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 4px;
-    letter-spacing: 0.05em;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .band-label {
-    text-align: center;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    color: var(--gold);
-    margin: 14px 0 2px;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards;
-    animation-delay: 1.6s;
-  }
-
-  .band-sub {
-    text-align: center;
-    font-size: 13.5px;
-    color: var(--muted);
-    max-width: 420px;
-    margin: 0 auto 40px;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards;
-    animation-delay: 1.7s;
-  }
-
-  /* Layer breakdown */
-  .layers { margin-top: 8px; }
-
-  .layer-row {
-    margin-bottom: 22px;
-  }
-
-  .layer-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 8px;
-  }
-
-  .layer-name {
-    font-size: 13.5px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--cream);
-    font-weight: 600;
-  }
-
-  .layer-score {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--gold-soft);
-  }
-
-  .layer-track {
-    height: 8px;
-    border-radius: 6px;
-    background: rgba(255,255,255,0.06);
-    overflow: hidden;
-  }
-
-  .layer-fill {
-    height: 100%;
-    border-radius: 6px;
-    width: 0%;
-    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
-    transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .note {
-    margin-top: 48px;
-    padding: 22px 24px;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background: var(--navy-mid);
-  }
-
-  .note-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--gold-soft);
-    margin-bottom: 8px;
-  }
-
-  .note-body {
-    font-size: 13.5px;
-    line-height: 1.6;
-    color: var(--muted);
-  }
-
-  .footer {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.04em;
-  }
-
-  .empty-state {
-    text-align: center;
-    color: var(--muted);
-    font-size: 14px;
-    padding: 60px 20px;
-  }
-</style>
-</head>
-<body>
-  <div class="page" id="app">
-    <!-- populated by JS -->
-  </div>
-
-<script>
-  const params = new URLSearchParams(window.location.search);
-
-  const name = params.get('name') || '';
-  const score = params.has('score') ? Number(params.get('score')) : null;
-  const sleep = params.has('sleep') ? Number(params.get('sleep')) : null;
-  const lifestyle = params.has('lifestyle') ? Number(params.get('lifestyle')) : null;
-  const recovery = params.has('recovery') ? Number(params.get('recovery')) : null;
-
-  const app = document.getElementById('app');
-
-  function band(score) {
-    if (score >= 80) return { label: 'Optimized', sub: 'Your architecture and inputs are aligned. The focus now is holding this under real-world stress.' };
-    if (score >= 60) return { label: 'Building Capacity', sub: 'The foundation is there. A few targeted shifts in sleep architecture or lifestyle load will move this meaningfully.' };
-    if (score >= 40) return { label: 'Fragmented Recovery', sub: 'Your system is compensating, not recovering. This is exactly the range the 6-week protocol is built for.' };
-    return { label: 'Depleted', sub: 'Recovery debt has likely been accumulating for a while. This is a strong starting point to work from, not a verdict.' };
-  }
-
-  function clampPct(v) {
-    if (v === null || isNaN(v)) return 0;
-    return Math.max(0, Math.min(100, v));
-  }
-
-  if (score === null || isNaN(score)) {
-    app.innerHTML = `
-      <div class="eyebrow">Praposhan</div>
-      <h1 class="brand">ZENITH Score</h1>
-      <div class="empty-state">No score found in the link. Please use the results link sent to your email after completing the assessment.</div>
-    `;
+  var tier, tierBody;
+  if (zenith >= 68) {
+    tier = 'PEAK';
+    tierBody = 'Your sleep architecture, lifestyle inputs, recovery and performance outputs are all performing above average.\n\n'
+      + 'The gap between where you are and where Praposhan members graduate is smaller than you think — and the data shows exactly where it is.\n\n'
+      + 'Members who enter at your level add an average of 1.8 hours of high-quality productive time per day within six weeks. Not by changing everything. By closing the precise gaps your score identified.';
+  } else if (zenith >= 42) {
+    tier = 'BUILD';
+    tierBody = 'Your data shows a clear and specific pattern. Your sleep architecture has identifiable gaps — and your lifestyle inputs are inconsistent enough to compound them daily. This is showing up directly in your recovery and performance outputs.\n\n'
+      + 'This is the profile that responds fastest to a structured protocol. Members who start where you are average a 22-point ZENITH Score improvement in 8 weeks.';
   } else {
-    const pct = clampPct(score);
-    const circumference = 691.15; // 2 * PI * r, r = 110
-    const offset = circumference - (circumference * pct / 100);
-    const b = band(pct);
-
-    app.innerHTML = `
-      <div class="eyebrow">Praposhan</div>
-      <h1 class="brand">Sleep to Rise.</h1>
-      <div class="tagline">Your ZENITH Score results</div>
-
-      ${name ? `<div class="greeting">Hi <strong>${name}</strong>, here's where you stand today.</div>` : ''}
-
-      <div class="gauge-wrap">
-        <svg class="gauge" viewBox="0 0 240 240">
-          <defs>
-            <linearGradient id="riseGradient" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#7a6636" />
-              <stop offset="55%" stop-color="#c9a24a" />
-              <stop offset="100%" stop-color="#f3d98a" />
-            </linearGradient>
-          </defs>
-          <circle class="gauge-track" cx="120" cy="120" r="110" />
-          <circle class="gauge-fill" cx="120" cy="120" r="110"
-                  style="stroke-dashoffset: ${offset};" />
-        </svg>
-        <div class="gauge-center">
-          <div class="score-num">${pct}</div>
-          <div class="score-max">OUT OF 100</div>
-        </div>
-      </div>
-
-      <div class="band-label">${b.label}</div>
-      <div class="band-sub">${b.sub}</div>
-
-      <div class="layers">
-        ${sleep !== null ? `
-        <div class="layer-row">
-          <div class="layer-head">
-            <span class="layer-name">Sleep Architecture</span>
-            <span class="layer-score">${clampPct(sleep)}</span>
-          </div>
-          <div class="layer-track"><div class="layer-fill" data-w="${clampPct(sleep)}"></div></div>
-        </div>` : ''}
-
-        ${lifestyle !== null ? `
-        <div class="layer-row">
-          <div class="layer-head">
-            <span class="layer-name">Lifestyle Inputs</span>
-            <span class="layer-score">${clampPct(lifestyle)}</span>
-          </div>
-          <div class="layer-track"><div class="layer-fill" data-w="${clampPct(lifestyle)}"></div></div>
-        </div>` : ''}
-
-        ${recovery !== null ? `
-        <div class="layer-row">
-          <div class="layer-head">
-            <span class="layer-name">Recovery / Performance Output</span>
-            <span class="layer-score">${clampPct(recovery)}</span>
-          </div>
-          <div class="layer-track"><div class="layer-fill" data-w="${clampPct(recovery)}"></div></div>
-        </div>` : ''}
-      </div>
-
-      <div class="note">
-        <div class="note-title">What happens next</div>
-        <div class="note-body">
-          This score is a starting snapshot, not a diagnosis. Reply to the email you received this link in,
-          and we'll walk through what's driving your score and whether the 6-week protocol is the right fit.
-        </div>
-      </div>
-
-      <div class="footer">PRAPOSHAN &middot; SLEEP TO RISE</div>
-    `;
-
-    // trigger bar fill animations after paint
-    requestAnimationFrame(() => {
-      document.querySelectorAll('.layer-fill').forEach(el => {
-        const w = el.getAttribute('data-w');
-        setTimeout(() => { el.style.width = w + '%'; }, 100);
-      });
-    });
+    tier = 'BASELINE';
+    tierBody = 'Your score places you in the baseline tier. This is not a reflection of your potential — it is a precise measurement of what your biology has been working with.\n\n'
+      + 'Your recovery and performance outputs are running significantly below what your physiology is capable of producing. Members who start at ZENITH BASELINE see the largest absolute improvements of any group we work with. Average improvement: 31 points over 12 weeks.';
   }
-</script>
-</body>
-</html>
+
+  var resultsUrl = 'https://praposhan.github.io/zenith_results/zenith-results.html'
+    + '?name=' + encodeURIComponent(name)
+    + '&score=' + zenith
+    + '&sleep=' + Math.round(SA)
+    + '&lifestyle=' + Math.round(LI)
+    + '&recovery=' + Math.round(OP);
+
+  var subject = 'Your ZENITH Score: ' + zenith + '/100 (' + tier + ')';
+  var body = 'Hi ' + name + ',\n\n'
+    + 'Your ZENITH Score: ' + zenith + '/100\n'
+    + 'ZENITH ' + tier + '\n\n'
+    + tierBody + '\n\n'
+    + 'Your full breakdown: ' + resultsUrl + '\n\n'
+    + 'Book my ZENITH Consultation: [your booking link]\n\n'
+    + '3 spots remaining in this cohort. Your ZENITH Score is a proprietary lifestyle index and does not constitute a clinical diagnosis.\n\n'
+    + '— Praposhan\nSleep to Rise.';
+
+  if (email) GmailApp.sendEmail(email, subject, body);
+
+  sheet.getRange(row, v.length + 1).setValue(Math.round(SA));
+  sheet.getRange(row, v.length + 2).setValue(Math.round(LI));
+  sheet.getRange(row, v.length + 3).setValue(Math.round(OP));
+  sheet.getRange(row, v.length + 4).setValue(zenith);
+  sheet.getRange(row, v.length + 5).setValue(tier);
+}
