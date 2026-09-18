@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The ZENITH Assessment — Praposhan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep: #060E1C;
+    --navy: #0B1B33;
+    --navy-2: #14264A;
+    --gold: #C9A24B;
+    --gold-soft: #E4CD8E;
+    --amber: #C77B3D;
+    --ink: #FFFFFF;
+    --sub: #AEB8CC;
+    --card: #101F3B;
+    --card-2: #16295099;
+    --border: #24365C;
+    --danger-bg: #E7EEF5;
+    --danger-ink: #16233B;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --ink: #FFFFFF; }
+  }
+  :root[data-theme="dark"] { --ink: #FFFFFF; }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--navy-deep);
+    color: var(--ink);
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    min-height: 100vh;
+  }
+  #app {
+    max-width: 560px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px 40px;
+  }
+  .brand {
+    text-align: center;
+    padding: 8px 0 4px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .segbar { display: flex; gap: 5px; margin: 14px 0 8px; }
+  .seg { flex: 1; height: 6px; background: var(--navy-2); border-radius: 999px; overflow: hidden; }
+  .seg-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-soft)); border-radius: 999px; transition: width 0.35s ease; }
+  .seg-current .seg-fill { box-shadow: 0 0 6px var(--gold); }
+  .segbar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--sub); font-weight: 600; letter-spacing: 0.3px; margin-bottom: 22px; }
+  .card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .kicker {
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  h1.hero-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 30px;
+    line-height: 1.2;
+    margin: 0 0 14px;
+  }
+  .prompt {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.35;
+    margin: 0 0 22px;
+  }
+  .body-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--sub);
+    margin: 0 0 20px;
+  }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .opt-btn {
+    text-align: left;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    color: var(--ink);
+    padding: 16px 18px;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .opt-btn:hover { border-color: var(--gold); background: var(--navy-2); }
+  .opt-btn.selected { border-color: var(--gold); background: var(--navy-2); box-shadow: 0 0 0 1px var(--gold); }
+  input[type="text"], input[type="email"] {
+    width: 100%;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    color: var(--ink);
+    padding: 16px 18px;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    margin-bottom: 18px;
+  }
+  input::placeholder { color: #6E7A93; }
+  input.invalid { border-color: #D0654A; }
+  .field-error { color: #D0654A; font-size: 12px; margin: -12px 0 14px; min-height: 14px; }
+  .field-suggest { background: var(--card); border: 1px solid var(--gold); border-radius: 10px; padding: 12px 14px; font-size: 13px; margin: -10px 0 16px; color: var(--sub); }
+  .field-suggest strong { color: var(--gold); }
+  .link-btn { background: none; border: none; color: var(--gold); font-weight: 700; font-size: 12.5px; text-decoration: underline; cursor: pointer; padding: 0; margin-left: 10px; }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy-deep);
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    width: 100%;
+  }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-secondary {
+    background: transparent;
+    color: var(--sub);
+    border: none;
+    font-size: 13px;
+    padding: 12px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .footer-nav { display: flex; gap: 10px; margin-top: 8px; }
+  .center-note { text-align: center; font-size: 12.5px; color: #6E7A93; margin-top: 14px; }
+
+  /* Results screen */
+  .score-circle {
+    width: 150px; height: 150px; border-radius: 50%;
+    border: 6px solid var(--gold);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    margin: 8px auto 6px;
+  }
+  .score-circle.baseline { border-color: var(--amber); }
+  .score-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 40px; }
+  .score-tier { color: var(--gold); font-weight: 700; letter-spacing: 1px; font-size: 13px; }
+  .score-tier.baseline { color: var(--amber); }
+  .archetype-line { text-align: center; color: var(--gold); font-size: 12.5px; font-weight: 700; letter-spacing: 0.5px; margin: 6px 0 20px; text-transform: uppercase; }
+  .breakdown { display: flex; gap: 10px; margin: 0 0 18px; }
+  .breakdown .item { flex: 1; background: var(--card); border-radius: 10px; padding: 12px 8px; text-align: center; }
+  .breakdown .val { font-family: 'Syne', sans-serif; font-size: 19px; font-weight: 800; }
+  .breakdown .lbl { font-size: 10.5px; color: var(--sub); margin-top: 3px; }
+  .driver-line { background: var(--card); border-radius: 10px; padding: 13px 16px; font-size: 13.5px; margin-bottom: 16px; }
+  .driver-line strong { color: var(--gold); }
+  .tier-body { font-size: 14.5px; line-height: 1.6; margin-bottom: 20px; white-space: pre-line; color: var(--sub); }
+
+  .banner { border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; font-size: 13.5px; line-height: 1.5; }
+  .banner-safety { background: var(--danger-bg); color: var(--danger-ink); }
+  .banner-breathing { background: #E7EEF5; color: var(--danger-ink); }
+  .banner strong { display: block; margin-bottom: 4px; font-size: 14px; }
+
+  .cta-block { background: var(--card); border: 1.5px solid var(--gold); border-radius: 14px; padding: 20px; margin-bottom: 14px; }
+  .cta-block.highlight { background: linear-gradient(135deg, var(--navy-2), var(--card)); }
+  .cta-label { color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .cta-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 8px; }
+  .cta-desc { font-size: 13.5px; color: var(--sub); margin-bottom: 14px; line-height: 1.5; }
+  .btn-whatsapp {
+    display: block; text-align: center; background: #25D366; color: #063d1f;
+    text-decoration: none; padding: 15px; border-radius: 10px; font-weight: 700; font-size: 14.5px;
+  }
+  .btn-book {
+    display: block; text-align: center; background: transparent; color: var(--gold);
+    border: 1.5px solid var(--gold); text-decoration: none; padding: 14px; border-radius: 10px;
+    font-weight: 700; font-size: 14px; margin-top: 10px;
+  }
+  .disclaimer { font-size: 11px; color: #5A6784; text-align: center; margin-top: 18px; line-height: 1.5; }
+  .booked-check { background: var(--card); border-radius: 10px; padding: 12px 14px; margin-top: 14px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; font-size:12.5px; color: var(--sub); }
+  .chip { background: transparent; border: 1.5px solid var(--border); color: var(--sub); padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight:600; cursor:pointer; margin-left:6px; }
+  .chip-selected { background: var(--gold); color: var(--navy-deep); border-color: var(--gold); }
+  .status-block { border-radius: 14px; padding: 20px; margin-bottom: 14px; }
+  .status-block.on-track { background: rgba(76,175,125,0.1); border: 1.5px solid var(--green); }
+  .status-block.needs-action { background: var(--card); border: 1.5px solid var(--gold); }
+  .status-block ul { margin: 8px 0 14px; padding-left: 18px; font-size: 13px; color: var(--sub); line-height:1.6; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ===================== DATA MODEL =====================
+// Lifestyle domain items: points 0-3, 3 = healthiest response (feeds ZENITH Score)
+// Clinical screener items (PHQ-2/GAD-2/breathing/headache): points 0-3, 0 = no symptom, 3 = most severe (standard ascending clinical convention, flag-only, never enters ZENITH Score)
+
+const SA_QUESTIONS = [
+  { id:'sa1', prompt:'How long has it usually taken you to fall asleep after getting into bed?', options:[
+    {label:'Under 15 minutes', pts:3},{label:'15 to 30 minutes', pts:2},{label:'30 to 60 minutes', pts:1},{label:'More than 60 minutes', pts:0}]},
+  { id:'sa2', prompt:'How many hours of actual sleep do you typically get?', options:[
+    {label:'More than 7 hours', pts:3},{label:'6 to 7 hours', pts:2},{label:'5 to 6 hours', pts:1},{label:'Less than 5 hours', pts:0}]},
+  { id:'sa3', prompt:'Of the time you spend in bed, how much is spent actually asleep?', options:[
+    {label:'Almost all of it', pts:3},{label:'Most of it', pts:2},{label:'About half', pts:1},{label:'Less than half', pts:0}]},
+  { id:'sa4', prompt:'How often do you wake up in the middle of the night?', options:[
+    {label:'Never or rarely', pts:3},{label:'Less than once a week', pts:2},{label:'Once or twice a week', pts:1},{label:'Three or more times a week', pts:0}]},
+  { id:'sa5', prompt:"How often do you wake up earlier than intended and can't fall back asleep?", options:[
+    {label:'Never or rarely', pts:3},{label:'Less than once a week', pts:2},{label:'Once or twice a week', pts:1},{label:'Three or more times a week', pts:0}]},
+  { id:'sa6', prompt:'Over the past month, how would you rate your overall sleep quality?', options:[
+    {label:'Very good', pts:3},{label:'Fairly good', pts:2},{label:'Fairly bad', pts:1},{label:'Very bad', pts:0}]},
+  { id:'sa7', prompt:'How much has poor sleep affected your daily functioning?', options:[
+    {label:'Not at all', pts:3},{label:'A little', pts:2},{label:'Somewhat', pts:1},{label:'Very much', pts:0}]}
+];
+
+const BREATHING_QUESTIONS = [
+  { id:'br1', prompt:'Have you been told that you snore loudly, or noticed yourself gasping, choking, or stopping breathing during sleep?', options:[
+    {label:'No, never', pts:0},{label:'Occasionally, mild snoring only', pts:1},{label:'Regularly, loud snoring', pts:2},{label:'Yes, gasping, choking, or stopping breathing', pts:3}]},
+  { id:'br2', prompt:'How often do you wake up with a headache?', options:[
+    {label:'Never or rarely', pts:0},{label:'Less than once a week', pts:1},{label:'Once or twice a week', pts:2},{label:'Three or more times a week', pts:3}]}
+];
+
+const LI_QUESTIONS = [
+  { id:'li1', prompt:'How often do you get natural light exposure within 30 minutes of waking?', options:[
+    {label:'Every day', pts:3},{label:'Most days', pts:2},{label:'A few times a week', pts:1},{label:'Rarely or never', pts:0}]},
+  { id:'li2', prompt:'When do you typically have your last caffeine of the day?', options:[
+    {label:'Before noon', pts:3},{label:'Between noon and 2 PM', pts:2},{label:'Between 2 PM and 4 PM', pts:1},{label:'After 4 PM or evening', pts:0}]},
+  { id:'li3', prompt:'How long before bed is your last meal, typically?', options:[
+    {label:'More than 3 hours before', pts:3},{label:'2 to 3 hours before', pts:2},{label:'1 to 2 hours before', pts:1},{label:'Within 1 hour or during the night', pts:0}]},
+  { id:'li4', prompt:'How often do you drink alcohol in the evening?', options:[
+    {label:'Never or very rarely', pts:3},{label:'Once a week', pts:2},{label:'A few times a week', pts:1},{label:'Most evenings', pts:0}]},
+  { id:'li5', prompt:'How would you describe your evening wind-down routine?', options:[
+    {label:'Screens off, low light, calm and consistent', pts:3},{label:'Mostly calm but inconsistent', pts:2},{label:'Usually on screens or working', pts:1},{label:'I rely on alcohol or a sleep aid', pts:0}]},
+  { id:'li6', prompt:'How manageable is your stress and mental load most days?', options:[
+    {label:'Manageable', pts:3},{label:'Moderate', pts:2},{label:'High', pts:1},{label:'Overwhelming', pts:0}]}
+];
+
+const SAFETY_QUESTIONS = [
+  { id:'phq_a', prompt:'Over the past 2 weeks, how often have you had little interest or pleasure in doing things?', options:[
+    {label:'Not at all', pts:0},{label:'Several days', pts:1},{label:'More than half the days', pts:2},{label:'Nearly every day', pts:3}]},
+  { id:'phq_b', prompt:'Over the past 2 weeks, how often have you felt down, depressed, or hopeless?', options:[
+    {label:'Not at all', pts:0},{label:'Several days', pts:1},{label:'More than half the days', pts:2},{label:'Nearly every day', pts:3}]},
+  { id:'gad_a', prompt:'Over the past 2 weeks, how often have you felt nervous, anxious, or on edge?', options:[
+    {label:'Not at all', pts:0},{label:'Several days', pts:1},{label:'More than half the days', pts:2},{label:'Nearly every day', pts:3}]},
+  { id:'gad_b', prompt:'Over the past 2 weeks, how often have you felt unable to stop or control worrying?', options:[
+    {label:'Not at all', pts:0},{label:'Several days', pts:1},{label:'More than half the days', pts:2},{label:'Nearly every day', pts:3}]}
+];
+
+const OP_QUESTIONS = [
+  { id:'op1', prompt:'How physically recovered do you feel when you wake up?', options:[
+    {label:'Fully recovered', pts:3},{label:'Mostly recovered', pts:2},{label:'Partially recovered', pts:1},{label:'Unrecovered', pts:0}]},
+  { id:'op2', prompt:'How consistent is your energy across the day?', options:[
+    {label:'Consistent', pts:3},{label:'Morning strong, afternoon dip is recoverable', pts:2},{label:'Significant afternoon crash', pts:1},{label:'Low all day', pts:0}]},
+  { id:'op3', prompt:'How much physical tension or fatigue do you carry during the day?', options:[
+    {label:'Good', pts:3},{label:'Mild tension', pts:2},{label:'Regular physical fatigue', pts:1},{label:'Persistent exhaustion', pts:0}]},
+  { id:'op4', prompt:'On a typical day, how many hours of genuinely focused, high-quality work do you get?', options:[
+    {label:'4 or more hours', pts:3},{label:'2 to 4 hours', pts:2},{label:'1 to 2 hours', pts:1},{label:'Less than 1 hour', pts:0}]},
+  { id:'op5', prompt:'How sharp is your thinking and decision-making, day to day?', options:[
+    {label:'Sharp', pts:3},{label:'Mostly sharp', pts:2},{label:'Noticeably impaired', pts:1},{label:'Significantly foggy', pts:0}]},
+  { id:'op6', prompt:'How would you rate your emotional regulation and stress resilience this week?', options:[
+    {label:'Strong', pts:3},{label:'Generally stable', pts:2},{label:'Compromised', pts:1},{label:'Significantly affected', pts:0}]}
+];
+
+const GOAL_OPTIONS = ['More energy and mental sharpness','Better sleep','Reduce stress and anxiety','Improve recovery and physical performance','All of the above'];
+const GOAL_LABELS = ['Energy & Sharpness','Sleep Quality','Stress & Anxiety','Recovery & Performance','Full Optimization'];
+const WORK_OPTIONS = ['Founder or building my own business','Executive or senior leader','Finance, law, medicine, or professional services','Other high-demand profession'];
+const WORK_LABELS = ['Founder','Executive','Professional','High-Performer'];
+
+// STOP-BANG supplementary questions — shown only if the breathing flag triggers
+const SB_TIRED = { id:'sb_tired', prompt:'Do you often feel tired, fatigued, or sleepy during the daytime, even after what should be enough sleep?', options:[
+  {label:'No', pts:0},{label:'Yes', pts:1}] };
+const SB_BP = { id:'sb_bp', prompt:'Are you currently being treated for high blood pressure, or has a doctor told you that you have high blood pressure?', options:[
+  {label:'No', pts:0},{label:'Yes', pts:1}] };
+const SB_GENDER = { id:'sb_gender', prompt:"What's your sex?", options:[
+  {label:'Male', val:'male'},{label:'Female', val:'female'},{label:'Prefer not to say', val:'unspecified'}] };
+const SB_NECK = { id:'sb_neck', prompt:'What is your shirt collar or neck size (best estimate is fine)?', options:[
+  {label:'Under 16 in / 40 cm', val:'small'},{label:'16 to 17 in / 40 to 43 cm', val:'medium'},{label:'Over 17 in / 43 cm', val:'large'}] };
+
+const WHATSAPP_LINK = 'https://chat.whatsapp.com/LUxqnVDfm7QLZYiS2V3HfN';
+const CALENDLY_LINK = 'https://calendly.com/praposhanppc/30min'; // used for Sleep to Rise / ZENITH Reset / Breath to Rise
+const PSYCHOLOGIST_CALLBACK_EMAIL = 'praposhanppc@gmail.com'; // placeholder until real Calm to Rise booking link exists
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz6rHIJRNJGbFLXZH4CwGpbpo6CSgbjpevnjb6IoRHLsWIEYdSZw_OlNKhHxclK7R91/exec';
+let hasSubmitted = false;
+
+function mailtoCallbackLink(name) {
+  const subject = encodeURIComponent('Calm to Rise — Callback Request');
+  const body = encodeURIComponent(
+    'Hi,\n\nI just completed the ZENITH assessment and would like to request a callback about additional support (Calm to Rise).\n\nName: ' + (name || '') + '\n'
+  );
+  return 'mailto:' + PSYCHOLOGIST_CALLBACK_EMAIL + '?subject=' + subject + '&body=' + body;
+}
+
+function submitToSheet(r) {
+  if (hasSubmitted) return;
+  hasSubmitted = true;
+  const payload = {
+    action: 'submission',
+    name: answers.name || '',
+    email: answers.email || '',
+    zenith: r.zenith,
+    tier: r.tier,
+    sa: r.SA,
+    li: r.LI,
+    op: r.OP,
+    driver: r.primaryDriver,
+    archetype: r.archetype,
+    safetyFlag: r.isSafetyFlag,
+    breathingFlag: r.isBreathingFlag,
+    stopBangScore: answers.stopBangScore !== undefined ? answers.stopBangScore : '',
+    stopBangRisk: answers.stopBangRisk || '',
+    hasCalmToRise: answers.hasCalmToRise === true,
+    hasBreathToRise: answers.hasBreathToRise === true
+  };
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: JSON.stringify(payload)
+  }).catch(() => { /* fail silently — results already shown either way */ });
+}
+
+// ===================== SCREEN FLOW =====================
+let screens = [];
+screens.push({ type:'welcome' });
+screens.push({ type:'name' });
+SA_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'sa', q }));
+screens.push({ type:'intro', title:'Two important sets of questions before we continue', body:"Sleep Architecture done — nice work. You're just over a third through. Take your time with this next part — these help us make sure Praposhan is the right fit for where you are right now." });
+SAFETY_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'safety', q }));
+screens.push({ type:'intro', title:'Two quick questions about sleep and breathing', body:"These help us catch signals that a coaching program alone can't address." });
+BREATHING_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'breathing', q }));
+LI_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'li', q }));
+OP_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'op', q }));
+screens.push({ type:'goal', domain:'about' });
+screens.push({ type:'work', domain:'about' });
+// NOTE: what comes after 'work' is decided dynamically at runtime (see goToNextAfterWork)
+// based on the safety and breathing flags — mental health screen, STOP-BANG, breathing
+// screen, and the normal results screen are appended to `screens` as needed rather than
+// all being present upfront.
+
+let TOTAL_STEPS = screens.length + 1; // +1 approximates the eventual results screen for progress display
+
+const SECTION_ORDER = ['sa','safety','breathing','li','op','about'];
+const SECTION_LABELS = { sa:'Sleep', breathing:'Breathing Check', li:'Daily Habits', safety:'Wellbeing Check', op:'Recovery', about:'About You' };
+const CORE_SECTION_TOTALS = {};
+SECTION_ORDER.forEach(d => { CORE_SECTION_TOTALS[d] = screens.filter(s => s.domain === d).length; });
+
+function computeSectionProgress(currentStep) {
+  const done = { sa:0, breathing:0, li:0, safety:0, op:0, about:0 };
+  for (let i = 0; i <= currentStep && i < screens.length; i++) {
+    const d = screens[i].domain;
+    if (d && done[d] !== undefined) done[d]++;
+  }
+  return done;
+}
+let step = 0;
+const answers = {};
+
+// ===================== DYNAMIC BRANCHING =====================
+function currentFlags() {
+  const phq2Total = (answers.phq_a || 0) + (answers.phq_b || 0);
+  const gad2Total = (answers.gad_a || 0) + (answers.gad_b || 0);
+  const isSafetyFlag = phq2Total >= 3 || gad2Total >= 3;
+  const snoreScore = answers.br1 || 0;
+  const headacheScore = answers.br2 || 0;
+  const recoveryPts = answers.op1 !== undefined ? answers.op1 : 3;
+  const isBreathingFlag = snoreScore >= 2 || (headacheScore >= 2 && recoveryPts <= 1);
+  return { isSafetyFlag, isBreathingFlag };
+}
+
+function buildStopBangScreens() {
+  const out = [];
+  out.push({ type: 'sb_intro' });
+  out.push({ type: 'sb_q', q: SB_TIRED });
+  out.push({ type: 'sb_q', q: SB_BP });
+  out.push({ type: 'sb_input', field: 'sb_age', label: 'What is your age?', placeholder: 'e.g. 42' });
+  out.push({ type: 'sb_q', q: SB_GENDER });
+  out.push({ type: 'sb_input', field: 'sb_heightIn', label: 'What is your height, in inches? (5\'10" = 70)', placeholder: 'e.g. 70' });
+  out.push({ type: 'sb_input', field: 'sb_weightLb', label: 'What is your weight, in pounds?', placeholder: 'e.g. 210' });
+  out.push({ type: 'sb_q', q: SB_NECK });
+  out.push({ type: 'breathing_end' });
+  return out;
+}
+
+function computeStopBang() {
+  const snoreScore = answers.br1 || 0;
+  const S = snoreScore >= 2 ? 1 : 0;
+  const O = snoreScore >= 3 ? 1 : 0;
+  const T = answers.sb_tired || 0;
+  const P = answers.sb_bp || 0;
+  const age = answers.sb_age || 0;
+  const A = age > 50 ? 1 : 0;
+  const heightIn = answers.sb_heightIn || 0;
+  const weightLb = answers.sb_weightLb || 0;
+  const bmi = heightIn > 0 ? (703 * weightLb) / (heightIn * heightIn) : 0;
+  const B = bmi > 35 ? 1 : 0;
+  const gender = answers.sb_gender || 'unspecified';
+  const G = gender === 'male' ? 1 : 0;
+  const neckThreshold = gender === 'female' ? 'medium' : 'large'; // female cutoff ~16in, male ~17in
+  const neck = answers.sb_neck || 'small';
+  const neckOrder = { small: 0, medium: 1, large: 2 };
+  const N = neckOrder[neck] >= neckOrder[neckThreshold] ? 1 : 0;
+
+  const score = S + T + O + P + B + A + N + G;
+  let risk;
+  if (score <= 2) risk = 'LOW';
+  else if (score <= 4) risk = 'INTERMEDIATE';
+  else risk = 'HIGH';
+
+  answers.stopBangScore = score;
+  answers.stopBangRisk = risk;
+}
+
+function pushResultsScreen() {
+  if (!screens.some(sc => sc.type === 'results')) {
+    screens.push({ type: 'results' });
+  }
+}
+
+function goToNextAfterWork() {
+  const flags = currentFlags();
+  if (flags.isSafetyFlag) {
+    screens.push({ type: 'mh_end' });
+    step++;
+  } else {
+    goToAfterMentalHealth();
+  }
+}
+
+function goToAfterMentalHealth() {
+  const flags = currentFlags();
+  if (flags.isBreathingFlag) {
+    const sbScreens = buildStopBangScreens();
+    sbScreens.forEach(sc => screens.push(sc));
+    step++;
+  } else {
+    pushResultsScreen();
+    step++;
+  }
+}
+
+
+const app = document.getElementById('app');
+
+function logEvent(action, context) {
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: JSON.stringify({ action, name: answers.name || '', email: answers.email || '', context: context || '' })
+  }).catch(() => { /* fail silently — never block the quiz experience */ });
+}
+
+// Click-tracking via delegation — catches every WhatsApp/Calendly link regardless of which screen it's on
+app.addEventListener('click', (e) => {
+  const wa = e.target.closest('.btn-whatsapp');
+  if (wa) logEvent('click_whatsapp', screens[step] ? screens[step].type : '');
+  const book = e.target.closest('.btn-book');
+  if (book && book.getAttribute('href') && book.getAttribute('href').includes('calendly.com')) {
+    logEvent('click_calendly', screens[step] ? screens[step].type : '');
+  }
+});
+
+function render() {
+  const s = screens[step];
+  let html = `<div class="brand">Praposhan — Sleep to Rise</div>`;
+  if (s.type !== 'welcome' && s.type !== 'results') {
+    html += renderSegmentedProgress(s, step);
+  }
+  html += `<div class="card">${renderScreen(s)}</div>`;
+  app.innerHTML = html;
+  attachHandlers(s);
+}
+
+function renderSegmentedProgress(s, currentStep) {
+  const done = computeSectionProgress(currentStep);
+  const totalCore = SECTION_ORDER.reduce((a, d) => a + CORE_SECTION_TOTALS[d], 0);
+  const doneCore = SECTION_ORDER.reduce((a, d) => a + Math.min(done[d], CORE_SECTION_TOTALS[d]), 0);
+  const effectiveDomain = s.domain || (screens[currentStep + 1] && screens[currentStep + 1].domain);
+  const isPastCore = !SECTION_ORDER.includes(effectiveDomain) && step > screens.findIndex(sc => sc.domain === 'about');
+  const overallPct = isPastCore ? 100 : Math.round((doneCore / totalCore) * 100);
+
+  const segments = SECTION_ORDER.map(d => {
+    const total = CORE_SECTION_TOTALS[d] || 1;
+    const filled = isPastCore ? total : Math.min(done[d], total);
+    const isCurrent = effectiveDomain === d;
+    const pctFill = Math.round((filled / total) * 100);
+    return `<div class="seg ${isCurrent ? 'seg-current' : ''}"><div class="seg-fill" style="width:${pctFill}%"></div></div>`;
+  }).join('');
+
+  const labelText = isPastCore
+    ? 'Personalizing your results…'
+    : `Section ${SECTION_ORDER.indexOf(effectiveDomain) + 1} of 6 — ${SECTION_LABELS[effectiveDomain] || ''}`;
+
+  return `
+    <div class="segbar">${segments}</div>
+    <div class="segbar-label"><span>${labelText}</span><span>${overallPct}%</span></div>
+  `;
+}
+
+function renderScreen(s) {
+  if (s.type === 'welcome') {
+    return `
+      <div class="kicker">The ZENITH Assessment</div>
+      <h1 class="hero-title">Uncover your hidden sleep &amp; performance bottlenecks in 5 minutes.</h1>
+      <p class="body-text">A short, clinically-grounded assessment across your sleep, daily habits, and recovery — built for people whose output depends on how well they actually sleep. You'll walk away knowing exactly which lever to pull first.</p>
+      <button class="btn-primary" id="start-btn">Start the Assessment</button>
+      <div class="center-note">6 short sections · about 5 minutes · your results are private</div>
+    `;
+  }
+  if (s.type === 'name') {
+    return `
+      <div class="kicker">Before we begin</div>
+      <p class="prompt">What should we call you, and where should we send your results?</p>
+      <input type="text" id="name-input" placeholder="First name" autocomplete="given-name">
+      <input type="email" id="email-input" placeholder="Email address" autocomplete="email">
+      <div id="email-error" class="field-error"></div>
+      <div id="email-suggest" class="field-suggest" style="display:none;">
+        Did you mean <strong id="suggest-domain"></strong>?
+        <button type="button" id="suggest-fix" class="link-btn">Use this</button>
+        <button type="button" id="suggest-keep" class="link-btn">No, it's correct</button>
+      </div>
+      <button class="btn-primary" id="name-continue" disabled>Continue</button>
+    `;
+  }
+  if (s.type === 'intro') {
+    return `
+      <div class="kicker">Section</div>
+      <p class="prompt">${s.title}</p>
+      <p class="body-text">${s.body}</p>
+      <button class="btn-primary" id="intro-continue">Continue</button>
+    `;
+  }
+  if (s.type === 'q') {
+    const opts = s.q.options.map((o, i) => `<button class="opt-btn" data-idx="${i}">${o.label}</button>`).join('');
+    return `
+      <p class="prompt">${s.q.prompt}</p>
+      <div class="options">${opts}</div>
+      ${step > 1 ? '<div class="footer-nav"><button class="btn-secondary" id="back-btn">← Back</button></div>' : ''}
+    `;
+  }
+  if (s.type === 'goal') {
+    const opts = GOAL_OPTIONS.map((label, i) => `<button class="opt-btn" data-idx="${i}">${label}</button>`).join('');
+    return `
+      <div class="kicker">Almost There</div>
+      <p class="prompt">What's your primary goal right now?</p>
+      <div class="options">${opts}</div>
+      <div class="center-note">Just 2 questions left, then your ZENITH Score.</div>
+    `;
+  }
+  if (s.type === 'work') {
+    const opts = WORK_OPTIONS.map((label, i) => `<button class="opt-btn" data-idx="${i}">${label}</button>`).join('');
+    return `
+      <div class="kicker">Last Question</div>
+      <p class="prompt">Which best describes your work situation?</p>
+      <div class="options">${opts}</div>
+    `;
+  }
+  if (s.type === 'mh_end') {
+    return `
+      <div class="kicker">Before Your Results</div>
+      <p class="prompt">Let's take care of this part first.</p>
+      <p class="body-text">A couple of your answers point to something worth addressing directly — and sleep coaching works best once this side is supported, not instead of it. Sleep and mental health run in both directions: poor sleep worsens mood and anxiety, and unmanaged mood or anxiety makes sleep coaching much less effective on its own.</p>
+      <p class="body-text">This isn't a diagnosis — it's a signal worth taking seriously. We'd like to connect you with our in-house psychologist through <strong>Calm to Rise</strong>. You can start this alongside Sleep to Rise or ZENITH Reset — many clients do both together.</p>
+      <a class="btn-book" style="margin-bottom:12px; display:block;" href="${mailtoCallbackLink(answers.name)}">Request a Callback — Calm to Rise</a>
+      <a class="btn-whatsapp" href="${WHATSAPP_LINK}" target="_blank">Join the Free WhatsApp Community</a>
+      <div class="booked-check">
+        <span>Already reached out for Calm to Rise?</span>
+        <div>
+          <button type="button" class="chip ${answers.hasCalmToRise === true ? 'chip-selected' : ''}" data-val="true" id="mh-booked-yes">Yes</button>
+          <button type="button" class="chip ${answers.hasCalmToRise === false ? 'chip-selected' : ''}" data-val="false" id="mh-booked-no">Not yet</button>
+        </div>
+      </div>
+      <button class="btn-secondary" id="mh-continue" style="margin-top:12px;">Continue to my full results →</button>
+    `;
+  }
+  if (s.type === 'sb_intro') {
+    return `
+      <div class="kicker">A Closer Look</div>
+      <p class="prompt">A few more questions about your breathing during sleep</p>
+      <p class="body-text">A couple of your answers are worth a closer look. These next few questions use the same criteria physicians use to estimate risk — it takes under a minute.</p>
+      <button class="btn-primary" id="sb-continue">Continue</button>
+    `;
+  }
+  if (s.type === 'sb_q') {
+    const opts = s.q.options.map((o, i) => `<button class="opt-btn" data-idx="${i}">${o.label}</button>`).join('');
+    return `<p class="prompt">${s.q.prompt}</p><div class="options">${opts}</div>`;
+  }
+  if (s.type === 'sb_input') {
+    return `
+      <p class="prompt">${s.label}</p>
+      <input type="text" inputmode="decimal" id="sb-input-field" placeholder="${s.placeholder}">
+      <button class="btn-primary" id="sb-input-continue" disabled>Continue</button>
+    `;
+  }
+  if (s.type === 'breathing_end') {
+    if (answers.stopBangScore === undefined) computeStopBang();
+    const sb = answers.stopBangScore;
+    const risk = answers.stopBangRisk;
+    return `
+      <div class="kicker">Your Breathing Risk Score</div>
+      <div class="score-circle baseline"><div class="score-num">${sb}/8</div><div class="score-tier baseline">${risk} RISK</div></div>
+      <p class="body-text" style="margin-top:20px;">This score uses STOP-BANG, a validated screening tool physicians use to estimate risk for sleep apnea — a breathing condition during sleep that only a physician can properly diagnose, typically with a sleep study. Your score suggests this is worth discussing with a physician and asking about a diagnostic sleep study.</p>
+      <p class="body-text">Whether or not that's eventually confirmed, <strong>Breath to Rise</strong> — our lifestyle and breathwork program — is built to help you improve your risk factors now, and to support any treatment plan a physician puts in place later.</p>
+      <a class="btn-whatsapp" style="margin-bottom:12px;" href="${WHATSAPP_LINK}" target="_blank">Join the Free WhatsApp Community</a>
+      <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book a Breath to Rise Discovery Call</a>
+      <div class="booked-check">
+        <span>Already booked your Breath to Rise call?</span>
+        <div>
+          <button type="button" class="chip ${answers.hasBreathToRise === true ? 'chip-selected' : ''}" data-val="true" id="sb-booked-yes">Yes</button>
+          <button type="button" class="chip ${answers.hasBreathToRise === false ? 'chip-selected' : ''}" data-val="false" id="sb-booked-no">Not yet</button>
+        </div>
+      </div>
+      <button class="btn-secondary" id="breathing-continue" style="margin-top:12px;">Continue to my full ZENITH results →</button>
+    `;
+  }
+  if (s.type === 'results') {
+    return renderResults();
+  }
+  return '';
+}
+
+function attachHandlers(s) {
+  if (s.type === 'welcome') {
+    document.getElementById('start-btn').onclick = () => { step++; render(); };
+  }
+  if (s.type === 'name') {
+    const nameInput = document.getElementById('name-input');
+    const emailInput = document.getElementById('email-input');
+    const emailError = document.getElementById('email-error');
+    const suggestBox = document.getElementById('email-suggest');
+    const suggestDomainEl = document.getElementById('suggest-domain');
+    const btn = document.getElementById('name-continue');
+
+    const EMAIL_RE = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+    const DISPOSABLE_DOMAINS = ['mailinator.com','guerrillamail.com','10minutemail.com','tempmail.com','temp-mail.org','throwawaymail.com','yopmail.com','trashmail.com','getnada.com','fakeinbox.com','maildrop.cc','sharklasers.com','dispostable.com','mintemail.com'];
+    const POPULAR_DOMAINS = ['gmail.com','yahoo.com','hotmail.com','outlook.com','icloud.com','aol.com','live.com','msn.com','protonmail.com','yahoo.co.in','rediffmail.com'];
+
+    function levenshtein(a, b) {
+      const dp = Array.from({ length: a.length + 1 }, (_, i) => [i].concat(Array(b.length).fill(0)));
+      for (let j = 0; j <= b.length; j++) dp[0][j] = j;
+      for (let i = 1; i <= a.length; i++) {
+        for (let j = 1; j <= b.length; j++) {
+          dp[i][j] = a[i - 1] === b[j - 1] ? dp[i - 1][j - 1]
+            : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+        }
+      }
+      return dp[a.length][b.length];
+    }
+
+    function suggestFix(domain) {
+      if (POPULAR_DOMAINS.includes(domain)) return null;
+      let best = null, bestDist = 3;
+      POPULAR_DOMAINS.forEach(d => {
+        const dist = levenshtein(domain, d);
+        if (dist > 0 && dist <= 2 && dist < bestDist) { best = d; bestDist = dist; }
+      });
+      return best;
+    }
+
+    let acknowledgedTypo = false;
+    let lastCheckedEmail = '';
+
+    function emailStatus(raw) {
+      const val = raw.trim().toLowerCase();
+      if (val.length === 0) return { ok: false, msg: '' };
+      if (!EMAIL_RE.test(val)) return { ok: false, msg: 'Enter a valid email address.' };
+      const domain = val.split('@')[1] || '';
+      if (DISPOSABLE_DOMAINS.includes(domain)) return { ok: false, msg: 'Please use a permanent email address — temporary/disposable addresses aren\'t accepted.' };
+      const tld = domain.split('.').pop();
+      if (!tld || tld.length < 2) return { ok: false, msg: 'Enter a valid email address.' };
+      return { ok: true, msg: '', domain };
+    }
+
+    function checkValid() {
+      const emailVal = emailInput.value.trim();
+      if (emailVal !== lastCheckedEmail) { acknowledgedTypo = false; lastCheckedEmail = emailVal; }
+      const status = emailStatus(emailVal);
+      const nameOk = nameInput.value.trim().length > 0;
+
+      emailError.textContent = emailVal.length > 0 ? status.msg : '';
+      emailInput.classList.toggle('invalid', emailVal.length > 0 && !status.ok);
+
+      let hasUnresolvedSuggestion = false;
+      if (status.ok && !acknowledgedTypo) {
+        const suggestion = suggestFix(status.domain);
+        if (suggestion) {
+          hasUnresolvedSuggestion = true;
+          const fixedEmail = emailVal.split('@')[0] + '@' + suggestion;
+          suggestDomainEl.textContent = fixedEmail;
+          suggestBox.style.display = 'block';
+          document.getElementById('suggest-fix').onclick = () => {
+            emailInput.value = fixedEmail;
+            acknowledgedTypo = true;
+            checkValid();
+          };
+          document.getElementById('suggest-keep').onclick = () => {
+            acknowledgedTypo = true;
+            checkValid();
+          };
+        } else {
+          suggestBox.style.display = 'none';
+        }
+      } else {
+        suggestBox.style.display = 'none';
+      }
+
+      btn.disabled = !nameOk || !status.ok || hasUnresolvedSuggestion;
+    }
+    nameInput.oninput = checkValid;
+    emailInput.oninput = checkValid;
+    nameInput.focus();
+    btn.onclick = () => {
+      answers.name = nameInput.value.trim();
+      answers.email = emailInput.value.trim().toLowerCase();
+      step++; render();
+    };
+  }
+  if (s.type === 'intro') {
+    document.getElementById('intro-continue').onclick = () => { step++; render(); };
+  }
+  if (s.type === 'q') {
+    document.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.onclick = () => {
+        const idx = parseInt(btn.dataset.idx);
+        answers[s.q.id] = s.q.options[idx].pts;
+        btn.classList.add('selected');
+        setTimeout(() => { step++; render(); }, 220);
+      };
+    });
+    const backBtn = document.getElementById('back-btn');
+    if (backBtn) backBtn.onclick = () => { step--; render(); };
+  }
+  if (s.type === 'goal') {
+    document.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.onclick = () => {
+        answers.goalIdx = parseInt(btn.dataset.idx);
+        btn.classList.add('selected');
+        setTimeout(() => { step++; render(); }, 220);
+      };
+    });
+  }
+  if (s.type === 'work') {
+    document.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.onclick = () => {
+        answers.workIdx = parseInt(btn.dataset.idx);
+        btn.classList.add('selected');
+        setTimeout(() => { goToNextAfterWork(); render(); }, 220);
+      };
+    });
+  }
+  if (s.type === 'mh_end') {
+    document.getElementById('mh-continue').onclick = () => { goToAfterMentalHealth(); render(); };
+    document.getElementById('mh-booked-yes').onclick = () => { answers.hasCalmToRise = true; render(); };
+    document.getElementById('mh-booked-no').onclick = () => { answers.hasCalmToRise = false; render(); };
+  }
+  if (s.type === 'sb_intro') {
+    document.getElementById('sb-continue').onclick = () => { step++; render(); };
+  }
+  if (s.type === 'breathing_end') {
+    document.getElementById('breathing-continue').onclick = () => { pushResultsScreen(); step++; render(); };
+    document.getElementById('sb-booked-yes').onclick = () => { answers.hasBreathToRise = true; render(); };
+    document.getElementById('sb-booked-no').onclick = () => { answers.hasBreathToRise = false; render(); };
+  }
+  if (s.type === 'sb_q') {
+    document.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.onclick = () => {
+        const idx = parseInt(btn.dataset.idx);
+        const opt = s.q.options[idx];
+        answers[s.q.id] = opt.pts !== undefined ? opt.pts : opt.val;
+        btn.classList.add('selected');
+        setTimeout(() => { step++; render(); }, 220);
+      };
+    });
+  }
+  if (s.type === 'sb_input') {
+    const input = document.getElementById('sb-input-field');
+    const btn = document.getElementById('sb-input-continue');
+    input.oninput = () => { btn.disabled = input.value.trim().length === 0 || isNaN(parseFloat(input.value)); };
+    input.focus();
+    btn.onclick = () => {
+      answers[s.field] = parseFloat(input.value);
+      step++; render();
+    };
+  }
+}
+function computeResults() {
+  const sum = ids => ids.reduce((acc, id) => acc + (answers[id] || 0), 0);
+
+  const saSum = sum(SA_QUESTIONS.map(q => q.id));
+  const liSum = sum(LI_QUESTIONS.map(q => q.id));
+  const opSum = sum(OP_QUESTIONS.map(q => q.id));
+
+  const SA = (saSum / 21) * 100;
+  const LI = (liSum / 18) * 100;
+  const OP = (opSum / 18) * 100;
+
+  const inputScore = SA * 0.60 + LI * 0.40;
+  let zenith = Math.round(inputScore * 0.55 + OP * 0.45);
+
+  let tier;
+  if (zenith >= 68) tier = 'PEAK';
+  else if (zenith >= 42) tier = 'BUILD';
+  else tier = 'BASELINE';
+
+  let overrideApplied = false;
+  if (SA < 25 && tier !== 'BASELINE') { tier = 'BASELINE'; overrideApplied = true; }
+
+  const domains = [
+    { label: 'Sleep Architecture', value: SA },
+    { label: 'Daily Inputs', value: LI },
+    { label: 'Recovery & Performance', value: OP }
+  ].sort((a, b) => a.value - b.value);
+  const primaryDriver = domains[0].label;
+
+  const phq2Total = (answers.phq_a || 0) + (answers.phq_b || 0);
+  const gad2Total = (answers.gad_a || 0) + (answers.gad_b || 0);
+  const isSafetyFlag = phq2Total >= 3 || gad2Total >= 3;
+
+  const snoreScore = answers.br1 || 0;
+  const headacheScore = answers.br2 || 0;
+  const recoveryPts = answers.op1 !== undefined ? answers.op1 : 3;
+  const isBreathingFlag = snoreScore >= 2 || (headacheScore >= 2 && recoveryPts <= 1);
+
+  const workLabel = WORK_LABELS[answers.workIdx] || 'High-Performer';
+  const goalLabel = GOAL_LABELS[answers.goalIdx] || 'Full Optimization';
+  const archetype = workLabel + ' — ' + goalLabel;
+
+  return { zenith, tier, SA: Math.round(SA), LI: Math.round(LI), OP: Math.round(OP), primaryDriver, isSafetyFlag, isBreathingFlag, archetype, overrideApplied };
+}
+
+const TIER_COPY = {
+  PEAK: "Your sleep architecture, lifestyle inputs, recovery and performance outputs are all performing above average.\n\nThe gap between where you are and where Praposhan members graduate is smaller than you think — and the data shows exactly where it is.",
+  BUILD: "Your data shows a clear and specific pattern. Your sleep architecture has identifiable gaps — and your lifestyle inputs are inconsistent enough to compound them daily.\n\nThis is the profile that responds fastest to a structured protocol.",
+  BASELINE: "Your score places you in the baseline tier. This is not a reflection of your potential — it is a precise measurement of what your biology has been working with.\n\nMembers who start at ZENITH BASELINE see the largest absolute improvements of any group we work with."
+};
+
+function renderResults() {
+  const r = computeResults();
+  submitToSheet(r);
+  const name = answers.name || 'there';
+  const tierClass = r.tier === 'BASELINE' ? 'baseline' : '';
+
+  // Affirmations for anything already handled — informational only, never a competing CTA
+  let onTrackHtml = '';
+  if (r.isSafetyFlag && answers.hasCalmToRise === true) {
+    onTrackHtml += `
+      <div class="status-block on-track">
+        <div class="cta-label">Calm to Rise</div>
+        <div class="cta-title">You're already on the right path</div>
+        <div class="cta-desc">You've already reached out for Calm to Rise support — that's exactly the right first step. Your sleep coaching will work even better running alongside it.</div>
+      </div>`;
+  }
+  if (r.isBreathingFlag && answers.hasBreathToRise === true) {
+    onTrackHtml += `
+      <div class="status-block on-track">
+        <div class="cta-label">Breath to Rise</div>
+        <div class="cta-title">You're already on the right path</div>
+        <div class="cta-desc">Your Breath to Rise call is already booked — exactly the right move for your breathing risk profile.</div>
+      </div>`;
+  }
+
+  // Count how many programs still genuinely need a decision (tier program always counts as one)
+  const unaddressed = [];
+  if (r.isSafetyFlag && answers.hasCalmToRise !== true) unaddressed.push('your mental health screen');
+  if (r.isBreathingFlag && answers.hasBreathToRise !== true) unaddressed.push('your breathing risk score');
+  const neededPrograms = 1 + unaddressed.length;
+
+  let decisionHtml = '';
+  if (neededPrograms >= 2) {
+    const concernSentence = unaddressed.length === 2
+      ? `Your results touch on two areas worth addressing directly — ${unaddressed[0]} and ${unaddressed[1]} — alongside your general sleep and performance profile.`
+      : `Your results touch on ${unaddressed[0]}, alongside your general sleep and performance profile.`;
+    decisionHtml = `
+      <div class="cta-block highlight">
+        <div class="cta-label">Let's Build The Right Plan Together</div>
+        <div class="cta-title">More than one area worth addressing</div>
+        <div class="cta-desc">${concernSentence} Rather than handing you separate programs to sort out on your own, we'd rather map this out together on one call.</div>
+        <ul>
+          <li>This is common — most people at this stage have more than one thing worth addressing</li>
+          <li>We'll walk through your full ZENITH breakdown together</li>
+          <li>You'll leave with one clear plan, not a list of programs to figure out alone</li>
+        </ul>
+        <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book Your Priority Planning Call</a>
+      </div>`;
+  } else if (r.tier === 'BASELINE') {
+    decisionHtml = `
+      <div class="cta-block highlight">
+        <div class="cta-label">Early Access — Limited Spots</div>
+        <div class="cta-title">You qualify for Sleep to Rise</div>
+        <div class="cta-desc">Your profile shows a clear, structural pattern — exactly what our full 8-week 1:1 program is built to fix. We only take a limited number of Sleep to Rise clients each month to keep real 1:1 attention.</div>
+        <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book Your Sleep to Rise Consultation</a>
+      </div>`;
+  } else if (r.tier === 'BUILD') {
+    decisionHtml = `
+      <div class="cta-block highlight">
+        <div class="cta-label">Early Access</div>
+        <div class="cta-title">You qualify for ZENITH Reset</div>
+        <div class="cta-desc">Your profile is a strong fit for our self-paced reset program. If you'd rather go deeper with 1:1 support, you may also qualify for Sleep to Rise — ask us on WhatsApp.</div>
+        <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book a Free 15-Min Consult</a>
+      </div>`;
+  } else {
+    decisionHtml = `
+      <div class="cta-block">
+        <div class="cta-label">Sharpen The Edge</div>
+        <div class="cta-title">ZENITH Reset is open to you</div>
+        <div class="cta-desc">You're already ahead — ZENITH Reset can help you sharpen the last edge most people never optimize.</div>
+        <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book a Free 15-Min Consult</a>
+      </div>`;
+  }
+
+  return `
+    <div class="kicker" style="text-align:center;">Hi ${name}, here's your ZENITH Score</div>
+    <div class="score-circle ${tierClass}">
+      <div class="score-num">${r.zenith}</div>
+      <div class="score-tier ${tierClass}">${r.tier}</div>
+    </div>
+    <div class="archetype-line">${r.archetype}</div>
+
+    ${onTrackHtml}
+
+    <div class="breakdown">
+      <div class="item"><div class="val">${r.SA}%</div><div class="lbl">Sleep</div></div>
+      <div class="item"><div class="val">${r.LI}%</div><div class="lbl">Daily Inputs</div></div>
+      <div class="item"><div class="val">${r.OP}%</div><div class="lbl">Recovery</div></div>
+    </div>
+    <div class="driver-line">Your biggest lever right now: <strong>${r.primaryDriver}</strong></div>
+    <div class="tier-body">${TIER_COPY[r.tier]}</div>
+
+    <div class="cta-block">
+      <div class="cta-label">Join Free</div>
+      <div class="cta-title">Praposhan Sleep &amp; Performance Community</div>
+      <div class="cta-desc">Daily tips, weekly new protocols, and first access to every new program — free, on WhatsApp.</div>
+      <a class="btn-whatsapp" href="${WHATSAPP_LINK}" target="_blank">Join the WhatsApp Community</a>
+    </div>
+
+    ${decisionHtml}
+
+    <div class="disclaimer">Your ZENITH Score is a proprietary lifestyle index built on validated screening principles (including PHQ-2 and GAD-2). It does not constitute a clinical diagnosis.</div>
+  `;
+}
+
+logEvent('start', 'welcome');
+render();
+</script>
+</body>
+</html>
