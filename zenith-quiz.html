@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The ZENITH Assessment — Praposhan</title>
+<link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -149,6 +150,29 @@
     cursor: pointer;
     text-align: center;
   }
+  .btn-continue-results {
+    display: block;
+    width: 100%;
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--sub);
+    font-size: 14.5px;
+    font-weight: 700;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .program-tag {
+    display: block;
+    font-size: 10.5px;
+    color: var(--sub);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: -2px;
+    margin-bottom: 4px;
+  }
   .footer-nav { display: flex; gap: 10px; margin-top: 8px; }
   .center-note { text-align: center; font-size: 12.5px; color: #6E7A93; margin-top: 14px; }
 
@@ -200,6 +224,14 @@
   .status-block.needs-action { background: var(--card); border: 1.5px solid var(--gold); }
   .status-block ul { margin: 8px 0 14px; padding-left: 18px; font-size: 13px; color: var(--sub); line-height:1.6; }
 </style>
+<!-- Google tag (gtag.js) — REPLACE G-X5DTYPLBSY with your real GA4 Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X5DTYPLBSY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-X5DTYPLBSY');
+</script>
 </head>
 <body>
 <div id="app"></div>
@@ -292,7 +324,7 @@ const SB_NECK = { id:'sb_neck', prompt:'What is your shirt collar or neck size (
 const WHATSAPP_LINK = 'https://chat.whatsapp.com/LUxqnVDfm7QLZYiS2V3HfN';
 const CALENDLY_LINK = 'https://calendly.com/praposhanppc/30min'; // used for Sleep to Rise / ZENITH Reset / Breath to Rise
 const PSYCHOLOGIST_CALLBACK_EMAIL = 'praposhanppc@gmail.com'; // placeholder until real Calm to Rise booking link exists
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz6rHIJRNJGbFLXZH4CwGpbpo6CSgbjpevnjb6IoRHLsWIEYdSZw_OlNKhHxclK7R91/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYmVyEqOMn4P66AaIl57hzWnCiYv08IY_gErJDM7qwYu6XkWyx3w8ycJbvgZGVHjM7/exec';
 let hasSubmitted = false;
 
 function mailtoCallbackLink(name) {
@@ -334,7 +366,6 @@ function submitToSheet(r) {
 // ===================== SCREEN FLOW =====================
 let screens = [];
 screens.push({ type:'welcome' });
-screens.push({ type:'name' });
 SA_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'sa', q }));
 screens.push({ type:'intro', title:'Two important sets of questions before we continue', body:"Sleep Architecture done — nice work. You're just over a third through. Take your time with this next part — these help us make sure Praposhan is the right fit for where you are right now." });
 SAFETY_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'safety', q }));
@@ -344,6 +375,7 @@ LI_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'li', q }));
 OP_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'op', q }));
 screens.push({ type:'goal', domain:'about' });
 screens.push({ type:'work', domain:'about' });
+screens.push({ type:'name' });
 // NOTE: what comes after 'work' is decided dynamically at runtime (see goToNextAfterWork)
 // based on the safety and breathing flags — mental health screen, STOP-BANG, breathing
 // screen, and the normal results screen are appended to `screens` as needed rather than
@@ -366,6 +398,16 @@ function computeSectionProgress(currentStep) {
 }
 let step = 0;
 const answers = {};
+const STATIC_SCREEN_COUNT = screens.length; // resume only supported within the static core, not dynamic branches
+
+function saveProgress() {
+  if (step > 0 && step < STATIC_SCREEN_COUNT) {
+    try { localStorage.setItem('zenith_progress', JSON.stringify({ step, answers })); } catch (e) {}
+  }
+}
+function clearProgress() {
+  try { localStorage.removeItem('zenith_progress'); } catch (e) {}
+}
 
 // ===================== DYNAMIC BRANCHING =====================
 function currentFlags() {
@@ -384,10 +426,10 @@ function buildStopBangScreens() {
   out.push({ type: 'sb_intro' });
   out.push({ type: 'sb_q', q: SB_TIRED });
   out.push({ type: 'sb_q', q: SB_BP });
-  out.push({ type: 'sb_input', field: 'sb_age', label: 'What is your age?', placeholder: 'e.g. 42' });
+  out.push({ type: 'sb_input', field: 'sb_age', label: 'What is your age?', placeholder: 'e.g. 42', min: 18, max: 100 });
   out.push({ type: 'sb_q', q: SB_GENDER });
-  out.push({ type: 'sb_input', field: 'sb_heightIn', label: 'What is your height, in inches? (5\'10" = 70)', placeholder: 'e.g. 70' });
-  out.push({ type: 'sb_input', field: 'sb_weightLb', label: 'What is your weight, in pounds?', placeholder: 'e.g. 210' });
+  out.push({ type: 'sb_input', field: 'sb_heightIn', label: 'What is your height, in inches? (5\'10" = 70)', placeholder: 'e.g. 70', min: 48, max: 84 });
+  out.push({ type: 'sb_input', field: 'sb_weightLb', label: 'What is your weight, in pounds?', placeholder: 'e.g. 210', min: 70, max: 400 });
   out.push({ type: 'sb_q', q: SB_NECK });
   out.push({ type: 'breathing_end' });
   return out;
@@ -473,13 +515,14 @@ app.addEventListener('click', (e) => {
 
 function render() {
   const s = screens[step];
-  let html = `<div class="brand">Praposhan — Sleep to Rise</div>`;
+  let html = `<a href="about.html" class="brand" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;"><img src="icon.svg" alt="Praposhan" style="width:22px; height:22px;">Praposhan — Sleep to Rise</a>`;
   if (s.type !== 'welcome' && s.type !== 'results') {
     html += renderSegmentedProgress(s, step);
   }
   html += `<div class="card">${renderScreen(s)}</div>`;
   app.innerHTML = html;
   attachHandlers(s);
+  saveProgress();
 }
 
 function renderSegmentedProgress(s, currentStep) {
@@ -515,13 +558,14 @@ function renderScreen(s) {
       <h1 class="hero-title">Uncover your hidden sleep &amp; performance bottlenecks in 5 minutes.</h1>
       <p class="body-text">A short, clinically-grounded assessment across your sleep, daily habits, and recovery — built for people whose output depends on how well they actually sleep. You'll walk away knowing exactly which lever to pull first.</p>
       <button class="btn-primary" id="start-btn">Start the Assessment</button>
-      <div class="center-note">6 short sections · about 5 minutes · your results are private</div>
+      <div class="center-note">6 short sections · about 5 minutes</div>
+      <div class="center-note" style="margin-top:6px;">Your answers are stored securely and used only to personalize your results and, where relevant, connect you with the right support. We never sell your data.</div>
     `;
   }
   if (s.type === 'name') {
     return `
-      <div class="kicker">Before we begin</div>
-      <p class="prompt">What should we call you, and where should we send your results?</p>
+      <div class="kicker">You're All Done</div>
+      <p class="prompt">Where should we send your ZENITH Score?</p>
       <input type="text" id="name-input" placeholder="First name" autocomplete="given-name">
       <input type="email" id="email-input" placeholder="Email address" autocomplete="email">
       <div id="email-error" class="field-error"></div>
@@ -530,7 +574,8 @@ function renderScreen(s) {
         <button type="button" id="suggest-fix" class="link-btn">Use this</button>
         <button type="button" id="suggest-keep" class="link-btn">No, it's correct</button>
       </div>
-      <button class="btn-primary" id="name-continue" disabled>Continue</button>
+      <div class="center-note" style="text-align:left; margin: -4px 0 14px;">We'll email your results here. Occasionally we'll share sleep &amp; performance tips too — unsubscribe anytime.</div>
+      <button class="btn-primary" id="name-continue" disabled>See My ZENITH Score →</button>
     `;
   }
   if (s.type === 'intro') {
@@ -571,7 +616,7 @@ function renderScreen(s) {
       <div class="kicker">Before Your Results</div>
       <p class="prompt">Let's take care of this part first.</p>
       <p class="body-text">A couple of your answers point to something worth addressing directly — and sleep coaching works best once this side is supported, not instead of it. Sleep and mental health run in both directions: poor sleep worsens mood and anxiety, and unmanaged mood or anxiety makes sleep coaching much less effective on its own.</p>
-      <p class="body-text">This isn't a diagnosis — it's a signal worth taking seriously. We'd like to connect you with our in-house psychologist through <strong>Calm to Rise</strong>. You can start this alongside Sleep to Rise or ZENITH Reset — many clients do both together.</p>
+      <p class="body-text">This isn't a diagnosis — it's a signal worth taking seriously. We'd like to connect you with our in-house psychologist through a Praposhan program called <strong>Calm to Rise</strong>. You can start this alongside the Sleep to Rise Program or ZENITH Reset — many clients do both together.</p>
       <a class="btn-book" style="margin-bottom:12px; display:block;" href="${mailtoCallbackLink(answers.name)}">Request a Callback — Calm to Rise</a>
       <a class="btn-whatsapp" href="${WHATSAPP_LINK}" target="_blank">Join the Free WhatsApp Community</a>
       <div class="booked-check">
@@ -581,7 +626,7 @@ function renderScreen(s) {
           <button type="button" class="chip ${answers.hasCalmToRise === false ? 'chip-selected' : ''}" data-val="false" id="mh-booked-no">Not yet</button>
         </div>
       </div>
-      <button class="btn-secondary" id="mh-continue" style="margin-top:12px;">Continue to my full results →</button>
+      <button class="btn-continue-results" id="mh-continue" style="margin-top:14px;">See My Full ZENITH Score →</button>
     `;
   }
   if (s.type === 'sb_intro') {
@@ -600,6 +645,7 @@ function renderScreen(s) {
     return `
       <p class="prompt">${s.label}</p>
       <input type="text" inputmode="decimal" id="sb-input-field" placeholder="${s.placeholder}">
+      <div id="sb-input-error" class="field-error"></div>
       <button class="btn-primary" id="sb-input-continue" disabled>Continue</button>
     `;
   }
@@ -611,7 +657,7 @@ function renderScreen(s) {
       <div class="kicker">Your Breathing Risk Score</div>
       <div class="score-circle baseline"><div class="score-num">${sb}/8</div><div class="score-tier baseline">${risk} RISK</div></div>
       <p class="body-text" style="margin-top:20px;">This score uses STOP-BANG, a validated screening tool physicians use to estimate risk for sleep apnea — a breathing condition during sleep that only a physician can properly diagnose, typically with a sleep study. Your score suggests this is worth discussing with a physician and asking about a diagnostic sleep study.</p>
-      <p class="body-text">Whether or not that's eventually confirmed, <strong>Breath to Rise</strong> — our lifestyle and breathwork program — is built to help you improve your risk factors now, and to support any treatment plan a physician puts in place later.</p>
+      <p class="body-text">Whether or not that's eventually confirmed, a Praposhan program called <strong>Breath to Rise</strong> — lifestyle and breathwork support — is built to help you improve your risk factors now, and to support any treatment plan a physician puts in place later.</p>
       <a class="btn-whatsapp" style="margin-bottom:12px;" href="${WHATSAPP_LINK}" target="_blank">Join the Free WhatsApp Community</a>
       <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book a Breath to Rise Discovery Call</a>
       <div class="booked-check">
@@ -621,11 +667,20 @@ function renderScreen(s) {
           <button type="button" class="chip ${answers.hasBreathToRise === false ? 'chip-selected' : ''}" data-val="false" id="sb-booked-no">Not yet</button>
         </div>
       </div>
-      <button class="btn-secondary" id="breathing-continue" style="margin-top:12px;">Continue to my full ZENITH results →</button>
+      <button class="btn-continue-results" id="breathing-continue" style="margin-top:14px;">See My Full ZENITH Score →</button>
     `;
   }
   if (s.type === 'results') {
     return renderResults();
+  }
+  if (s.type === 'resume_prompt') {
+    return `
+      <div class="kicker">Welcome Back</div>
+      <p class="prompt">Pick up where you left off?</p>
+      <p class="body-text">We saved your progress from last time.</p>
+      <button class="btn-primary" id="resume-yes" style="margin-bottom:10px;">Resume My Assessment</button>
+      <button class="btn-continue-results" id="resume-no">Start Over</button>
+    `;
   }
   return '';
 }
@@ -723,7 +778,7 @@ function attachHandlers(s) {
     btn.onclick = () => {
       answers.name = nameInput.value.trim();
       answers.email = emailInput.value.trim().toLowerCase();
-      step++; render();
+      goToNextAfterWork(); render();
     };
   }
   if (s.type === 'intro') {
@@ -759,6 +814,23 @@ function attachHandlers(s) {
       };
     });
   }
+  if (s.type === 'resume_prompt') {
+    document.getElementById('resume-yes').onclick = () => {
+      try {
+        const saved = JSON.parse(localStorage.getItem('zenith_progress'));
+        Object.assign(answers, saved.answers);
+        step = saved.step;
+      } catch (e) { step = 1; }
+      screens.shift();
+      render();
+    };
+    document.getElementById('resume-no').onclick = () => {
+      clearProgress();
+      screens.shift();
+      step = 0;
+      render();
+    };
+  }
   if (s.type === 'mh_end') {
     document.getElementById('mh-continue').onclick = () => { goToAfterMentalHealth(); render(); };
     document.getElementById('mh-booked-yes').onclick = () => { answers.hasCalmToRise = true; render(); };
@@ -786,7 +858,19 @@ function attachHandlers(s) {
   if (s.type === 'sb_input') {
     const input = document.getElementById('sb-input-field');
     const btn = document.getElementById('sb-input-continue');
-    input.oninput = () => { btn.disabled = input.value.trim().length === 0 || isNaN(parseFloat(input.value)); };
+    const errorEl = document.getElementById('sb-input-error');
+    function validate() {
+      const val = parseFloat(input.value);
+      if (input.value.trim().length === 0 || isNaN(val)) return { ok: false, msg: '' };
+      if (s.min !== undefined && val < s.min) return { ok: false, msg: `Please enter a value of at least ${s.min}.` };
+      if (s.max !== undefined && val > s.max) return { ok: false, msg: `Please enter a value of ${s.max} or below.` };
+      return { ok: true, msg: '' };
+    }
+    input.oninput = () => {
+      const r = validate();
+      btn.disabled = !r.ok;
+      errorEl.textContent = input.value.trim().length > 0 ? r.msg : '';
+    };
     input.focus();
     btn.onclick = () => {
       answers[s.field] = parseFloat(input.value);
@@ -840,13 +924,14 @@ function computeResults() {
 }
 
 const TIER_COPY = {
-  PEAK: "Your sleep architecture, lifestyle inputs, recovery and performance outputs are all performing above average.\n\nThe gap between where you are and where Praposhan members graduate is smaller than you think — and the data shows exactly where it is.",
-  BUILD: "Your data shows a clear and specific pattern. Your sleep architecture has identifiable gaps — and your lifestyle inputs are inconsistent enough to compound them daily.\n\nThis is the profile that responds fastest to a structured protocol.",
-  BASELINE: "Your score places you in the baseline tier. This is not a reflection of your potential — it is a precise measurement of what your biology has been working with.\n\nMembers who start at ZENITH BASELINE see the largest absolute improvements of any group we work with."
+  PEAK: "Your sleep architecture, lifestyle inputs, recovery and performance outputs are all performing above average.\n\nThe gap between where you are and an even sharper edge is smaller than you think — your breakdown below shows exactly where it is.",
+  BUILD: "Your results show a clear and specific pattern. Your sleep architecture has identifiable gaps — and your lifestyle inputs are inconsistent enough to compound them daily.\n\nThis is exactly the profile a structured protocol is built to address.",
+  BASELINE: "Your score places you in the baseline tier. This is not a reflection of your potential — it is a precise measurement of what your biology has been working with.\n\nThe good news about starting here: there's real room to move, and a clear structural pattern to work with."
 };
 
 function renderResults() {
   const r = computeResults();
+  clearProgress();
   submitToSheet(r);
   const name = answers.name || 'there';
   const tierClass = r.tier === 'BASELINE' ? 'baseline' : '';
@@ -856,7 +941,7 @@ function renderResults() {
   if (r.isSafetyFlag && answers.hasCalmToRise === true) {
     onTrackHtml += `
       <div class="status-block on-track">
-        <div class="cta-label">Calm to Rise</div>
+        <div class="cta-label">A Praposhan Program — Calm to Rise</div>
         <div class="cta-title">You're already on the right path</div>
         <div class="cta-desc">You've already reached out for Calm to Rise support — that's exactly the right first step. Your sleep coaching will work even better running alongside it.</div>
       </div>`;
@@ -864,7 +949,7 @@ function renderResults() {
   if (r.isBreathingFlag && answers.hasBreathToRise === true) {
     onTrackHtml += `
       <div class="status-block on-track">
-        <div class="cta-label">Breath to Rise</div>
+        <div class="cta-label">A Praposhan Program — Breath to Rise</div>
         <div class="cta-title">You're already on the right path</div>
         <div class="cta-desc">Your Breath to Rise call is already booked — exactly the right move for your breathing risk profile.</div>
       </div>`;
@@ -896,23 +981,23 @@ function renderResults() {
   } else if (r.tier === 'BASELINE') {
     decisionHtml = `
       <div class="cta-block highlight">
-        <div class="cta-label">Early Access — Limited Spots</div>
-        <div class="cta-title">You qualify for Sleep to Rise</div>
-        <div class="cta-desc">Your profile shows a clear, structural pattern — exactly what our full 8-week 1:1 program is built to fix. We only take a limited number of Sleep to Rise clients each month to keep real 1:1 attention.</div>
-        <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book Your Sleep to Rise Consultation</a>
+        <div class="cta-label">A Praposhan Program — Early Access, Limited Spots</div>
+        <div class="cta-title">You qualify for the Sleep to Rise Program</div>
+        <div class="cta-desc">Your profile shows a clear, structural pattern — exactly what our full 8-week 1:1 program is built to fix. We only take a limited number of Sleep to Rise Program clients each month to keep real 1:1 attention.</div>
+        <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book Your Sleep to Rise Call</a>
       </div>`;
   } else if (r.tier === 'BUILD') {
     decisionHtml = `
       <div class="cta-block highlight">
-        <div class="cta-label">Early Access</div>
+        <div class="cta-label">A Praposhan Program — Early Access</div>
         <div class="cta-title">You qualify for ZENITH Reset</div>
-        <div class="cta-desc">Your profile is a strong fit for our self-paced reset program. If you'd rather go deeper with 1:1 support, you may also qualify for Sleep to Rise — ask us on WhatsApp.</div>
+        <div class="cta-desc">Your profile is a strong fit for our self-paced reset program. If you'd rather go deeper with 1:1 support, you may also qualify for the Sleep to Rise Program — ask us on WhatsApp.</div>
         <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book a Free 15-Min Consult</a>
       </div>`;
   } else {
     decisionHtml = `
       <div class="cta-block">
-        <div class="cta-label">Sharpen The Edge</div>
+        <div class="cta-label">A Praposhan Program — Sharpen The Edge</div>
         <div class="cta-title">ZENITH Reset is open to you</div>
         <div class="cta-desc">You're already ahead — ZENITH Reset can help you sharpen the last edge most people never optimize.</div>
         <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book a Free 15-Min Consult</a>
@@ -937,6 +1022,8 @@ function renderResults() {
     <div class="driver-line">Your biggest lever right now: <strong>${r.primaryDriver}</strong></div>
     <div class="tier-body">${TIER_COPY[r.tier]}</div>
 
+    ${(neededPrograms >= 2 || r.tier === 'BASELINE') ? decisionHtml : ''}
+
     <div class="cta-block">
       <div class="cta-label">Join Free</div>
       <div class="cta-title">Praposhan Sleep &amp; Performance Community</div>
@@ -944,13 +1031,21 @@ function renderResults() {
       <a class="btn-whatsapp" href="${WHATSAPP_LINK}" target="_blank">Join the WhatsApp Community</a>
     </div>
 
-    ${decisionHtml}
+    ${(neededPrograms >= 2 || r.tier === 'BASELINE') ? '' : decisionHtml}
 
     <div class="disclaimer">Your ZENITH Score is a proprietary lifestyle index built on validated screening principles (including PHQ-2 and GAD-2). It does not constitute a clinical diagnosis.</div>
   `;
 }
 
 logEvent('start', 'welcome');
+(function checkForSavedProgress() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('zenith_progress'));
+    if (saved && typeof saved.step === 'number' && saved.step > 0 && saved.step < STATIC_SCREEN_COUNT && saved.answers) {
+      screens.unshift({ type: 'resume_prompt' });
+    }
+  } catch (e) { /* ignore malformed saved data */ }
+})();
 render();
 </script>
 </body>
