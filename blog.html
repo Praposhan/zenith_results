@@ -1,195 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-market="us">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/svg+xml" href="icon.svg">
-<title>Blog — Praposhan | Sleep &amp; Performance Research</title>
-<meta name="description" content="Research-backed articles on sleep, recovery, and performance, written by Geethika Babu, Certified Dental Sleep Medicine Specialist — with real citations, not trends.">
+<title>Journal · PRAPOSHAN</title>
+<meta name="description" content="Short, evidence-based reads on sleep, performance and recovery.">
 <link rel="canonical" href="https://praposhan.github.io/zenith_results/blog.html">
-<meta property="og:title" content="The Praposhan Blog">
-<meta property="og:description" content="Research-backed articles on sleep and performance, with real citations.">
+<meta property="og:title" content="Journal · PRAPOSHAN">
+<meta property="og:description" content="Short, evidence-based reads on sleep, performance and recovery.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://praposhan.github.io/zenith_results/blog.html">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy-deep: #060E1C; --navy: #0B1B33;
-    --gold: #C9A24B; --gold-soft: #E4CD8E;
-    --ink: #FFFFFF; --sub: #AEB8CC; --card: #101F3B; --border: #24365C;
-  }
-  * { box-sizing: border-box; }
-  body { margin:0; background: var(--navy-deep); color: var(--ink); font-family:'DM Sans',sans-serif; line-height:1.6; }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 60px 24px 80px; }
-  .nav { display:flex; justify-content:space-between; align-items:center; margin-bottom:56px; font-size:13px; }
-  .nav a { color: var(--sub); text-decoration:none; margin-left:20px; }
-  .nav a:hover { color: var(--gold); }
-  .nav-cta { display:inline-block; background: var(--gold); color: var(--navy-deep) !important; padding:9px 18px; border-radius:999px; font-weight:700; font-size:12.5px; animation: navPulse 2.2s infinite; }
-  @keyframes navPulse { 0% { box-shadow: 0 0 0 0 rgba(201,162,75,0.55); } 70% { box-shadow: 0 0 0 9px rgba(201,162,75,0); } 100% { box-shadow: 0 0 0 0 rgba(201,162,75,0); } }
-  .brand { color: var(--gold); font-weight:700; letter-spacing:2px; font-size:12px; text-transform:uppercase; }
-  .kicker { color: var(--gold); font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
-  h1 { font-family:'Syne',sans-serif; font-weight:800; font-size:34px; margin:0 0 40px; }
-  .post-card { display:block; background: var(--card); border:1px solid var(--border); border-radius:14px; padding:22px; margin-bottom:16px; text-decoration:none; color: inherit; }
-  .post-card:hover { border-color: var(--gold); }
-  .post-type { display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color: var(--gold); background: rgba(201,162,75,0.12); padding:3px 10px; border-radius:999px; margin-bottom:10px; }
-  .post-title { font-family:'Syne',sans-serif; font-weight:700; font-size:19px; margin-bottom:6px; }
-  .post-date { font-size:12px; color:#5A6784; margin-bottom:10px; }
-  .post-excerpt { font-size:14px; color: var(--sub); }
-  .empty-note { color: var(--sub); font-size:14px; }
-  footer { margin-top:60px; padding-top:24px; border-top:1px solid var(--border); font-size:12px; color:#5A6784; text-align:center; }
+<meta name="theme-color" content="#131518">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23131518'/%3E%3Cg transform='translate(12 12) scale(.76)'%3E%3Cpath d='M91.7 30.6 A46 46 0 1 1 71.6 9.4' fill='none' stroke='%239EC1D6' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M4 50 A46 46 0 0 0 96 50 Z' fill='%239EC1D6'/%3E%3Cpath d='M28 50 A22 22 0 0 1 72 50 Z' fill='%239EC1D6'/%3E%3Ccircle cx='83.6' cy='18.6' r='6' fill='%23E9EEF2'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/archivo-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/geist-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js"></script>
 
-  @media (max-width: 640px) {
-    .nav { flex-wrap: wrap; gap: 10px; padding: 14px 16px; justify-content: center; text-align: center; }
-    .nav > div { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; width: 100%; justify-content: center; }
-    .nav a { margin-left: 0; font-size: 12.5px; }
-    .nav-cta { order: 99; width: 100%; text-align: center; }
-  }
-</style>
-<!-- Google tag (gtag.js) — REPLACE G-X5DTYPLBSY with your real GA4 Measurement ID -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5DTYPLBSY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-X5DTYPLBSY');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-X5DTYPLBSY',{anonymize_ip:true});</script>
 </head>
 <body>
-<div class="wrap">
-  <div class="nav">
-    <a href="index.html" style="display:flex; align-items:center; gap:8px; text-decoration:none;"><img src="icon.svg" alt="Praposhan" style="width:28px; height:28px;"><span class="brand">Praposhan</span></a>
-    <div>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="programs.html">Programs</a>
-      <a class="nav-cta" href="https://praposhan.github.io/zenith_results/zenith-quiz.html">Take ZENITH Quiz Now →</a>
-    </div>
-  </div>
-
-  <div class="kicker">Insights</div>
-  <h1>The Praposhan Blog</h1>
-
-  <div style="background: var(--card); border:1.5px solid var(--gold); border-radius:14px; padding:22px 24px; margin-bottom:40px;">
-    <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:17px; margin-bottom:6px;">Get the next one first</div>
-    <div style="color: var(--sub); font-size:13.5px; margin-bottom:14px;">New research-backed articles, straight to your inbox — no spam, unsubscribe anytime.</div>
-    <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <input type="email" id="newsletter-email" placeholder="Your email address" style="flex:1; min-width:200px; background: var(--navy-deep); border:1.5px solid var(--border); color:#fff; padding:12px 14px; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:14px;">
-      <button id="newsletter-submit" style="background: var(--gold); color: var(--navy-deep); border:none; padding:12px 22px; border-radius:8px; font-weight:700; font-size:13.5px; cursor:pointer;">Subscribe</button>
-    </div>
-    <div id="newsletter-status" style="font-size:12.5px; margin-top:8px; min-height:14px;"></div>
-  </div>
-
-  <div id="post-list"></div>
-
-  <footer>Praposhan — Sleep to Rise</footer>
+<header class="site-head"><div class="wrap"><a class="logo" href="index.html" aria-label="PRAPOSHAN home"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><mask id="mh"><rect width="100" height="100" fill="#fff"/><g fill="#000"><rect y="55.6" width="100" height="2.6"/><rect y="63.7" width="100" height="2.6"/><rect y="72" width="100" height="2.6"/><rect y="80.2" width="100" height="2.6"/><rect y="88.4" width="100" height="2.6"/></g></mask></defs><path d="M91.7 30.6 A46 46 0 1 1 71.6 9.4" fill="none" stroke="#9EC1D6" stroke-width="3.6" stroke-linecap="round"/><g mask="url(#mh)" fill="#9EC1D6"><path d="M4 50 A46 46 0 0 0 96 50 Z"/><path d="M28 50 A22 22 0 0 1 72 50 Z"/></g><circle cx="83.6" cy="18.6" r="5.4" fill="#E9EEF2"/></svg><span><span class="word">PRAPOSHAN</span><span class="tag">SLEEP × PERFORMANCE</span></span></a>
+<nav class="nav"><a href="method.html">Method</a><a href="deep-dive.html">Deep Dive</a><a href="programs.html">Programs</a><a href="blog.html" class="on">Journal</a><a href="about.html">About</a><a class="btn btn-ice btn-sm" href="zenith-quiz.html">Take the ZENITH Quiz</a></nav>
+<button class="menu-btn" aria-label="Menu">Menu</button></div></header>
+<main>
+<section class="hero" style="padding-bottom:80px"><div class="wrap rv"><p class="eyebrow">Journal</p>
+<h1>Sleep science, in plain words.</h1>
+<p class="lede">Short reads on what the research actually says, and what it means for how you work.</p>
+<form class="inline-form" data-signup="journal"><input type="email" placeholder="Your email" aria-label="Email" required><button class="btn btn-ice" type="submit">Get new articles</button></form><div class="form-msg"></div>
+</div><div class="horizon" aria-hidden="true"><div class="sun"></div><div class="sweep"></div><div class="lines"></div></div></section>
+<section><div class="wrap"><div class="grid g3"><a class="card post-card rv" href="brain-on-no-sleep.html"><div><h3>Your Brain on No Sleep: What Decades of Research Actually Show</h3><p>What a 2010 meta-analysis of 70 studies found happens to attention, memory, and judgment after short-term sleep loss.</p></div><div class="meta">3 min read</div></a><a class="card post-card rv" href="caffeine-cutoff-rule.html"><div><h3>The 8.8-Hour Rule Nobody Told You About Your Coffee Habit</h3><p>A 2023 meta-analysis pinpointed exactly when your last coffee should be.</p></div><div class="meta">2 min read</div></a><a class="card post-card rv" href="cant-cram-memory.html"><div><h3>Why You Can&#x27;t Cram Your Way to Remembering Anything</h3><p>Sleep before AND after learning both matter for memory — here&#x27;s why.</p></div><div class="meta">2 min read</div></a><a class="card post-card rv" href="case-for-midday-nap.html"><div><h3>The Science-Backed Case for a Midday Nap at Work</h3><p>What the research says about nap timing, duration, and cognitive payoff.</p></div><div class="meta">2 min read</div></a><a class="card post-card rv" href="catching-up-working-against-you.html"><div><h3>Why &#x27;Catching Up&#x27; on Sleep This Weekend Might Be Working Against You</h3><p>The term &#x27;social jetlag,&#x27; and the dose-dependent research behind it.</p></div><div class="meta">2 min read</div></a><a class="card post-card rv" href="cbt-i-vs-pills.html"><div><h3>The Insomnia Treatment More Effective Than Pills (That Almost Nobody Uses)</h3><p>Why CBT-I is the first-line treatment guidelines recommend — and what it does for mental health too.</p></div><div class="meta">2 min read</div></a><a class="card post-card rv" href="immune-system-sleep.html"><div><h3>Sleep Is Doing More for Your Immune System Than You Think</h3><p>A rhinovirus experiment that measured sleep&#x27;s effect on catching a cold.</p></div><div class="meta">2 min read</div></a><a class="card post-card rv" href="metabolic-cost-short-sleep.html"><div><h3>The Quiet Metabolic Cost of Short Sleep</h3><p>The overlooked link between sleep and insulin resistance.</p></div><div class="meta">2 min read</div></a><a class="card post-card rv" href="move-more-sleep-better.html"><div><h3>Move More, Sleep Better: What the Data Actually Says About Timing</h3><p>The evidence on evening workouts is more forgiving than the folklore.</p></div><div class="meta">2 min read</div></a><a class="card post-card rv" href="night-owl-excuse.html"><div><h3>Are You Really a &#x27;Night Owl,&#x27; or Is That Just an Excuse?</h3><p>What chronotype research actually supports — and what it doesn&#x27;t.</p></div><div class="meta">2 min read</div></a><a class="card post-card rv" href="nightcap-myth.html"><div><h3>The Nightcap Myth: What Alcohol Actually Does to Your Sleep</h3><p>Falling asleep faster isn&#x27;t the same as sleeping well — here&#x27;s the REM data.</p></div><div class="meta">2 min read</div></a><a class="card post-card rv" href="overlooked-risk-evening-glass.html"><div><h3>The Overlooked Risk Factor Sitting in Your Evening Glass of Wine</h3><p>The measurable link between alcohol and sleep apnea risk.</p></div><div class="meta">2 min read</div></a><a class="card post-card rv" href="phone-editing-bedtime.html"><div><h3>Your Phone Is Quietly Editing Your Bedtime</h3><p>The exact mechanism by which screens delay your body&#x27;s melatonin release.</p></div><div class="meta">2 min read</div></a><a class="card post-card rv" href="snoring-not-just-annoying.html"><div><h3>Snoring Isn&#x27;t Just Annoying — Here&#x27;s What the Research Says It&#x27;s Connected To</h3><p>A landmark JAMA study and the cardiometabolic research that followed it.</p></div><div class="meta">2 min read</div></a><a class="card post-card rv" href="two-way-street-mental-health.html"><div><h3>The Two-Way Street Between Sleep and Mental Health</h3><p>Evidence that improving sleep quality actively improves mental health outcomes, not just the reverse.</p></div><div class="meta">2 min read</div></a></div></div></section>
+<section class="cta-band band"><div class="wrap rv"><p class="eyebrow">Start here</p><h2>Find your lever in five minutes.</h2><p class="lede">The free ZENITH Quiz scores your sleep, daily habits and recovery, and names the one thing to work on first.</p>
+<div class="hero-ctas"><a class="btn btn-ice" href="zenith-quiz.html">Take the free ZENITH Quiz</a><a class="btn btn-ghost" href="https://calendly.com/praposhanppc/30min" target="_blank" rel="noopener">Book a free results call</a></div>
+<p class="hero-note">5 minutes · No wearable needed · Your results by email</p></div></section>
+</main>
+<footer class="site-foot"><div class="wrap">
+<div class="foot-grid">
+ <div><a class="logo" href="index.html" aria-label="PRAPOSHAN home"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><mask id="mf"><rect width="100" height="100" fill="#fff"/><g fill="#000"><rect y="55.6" width="100" height="2.6"/><rect y="63.7" width="100" height="2.6"/><rect y="72" width="100" height="2.6"/><rect y="80.2" width="100" height="2.6"/><rect y="88.4" width="100" height="2.6"/></g></mask></defs><path d="M91.7 30.6 A46 46 0 1 1 71.6 9.4" fill="none" stroke="#9EC1D6" stroke-width="3.6" stroke-linecap="round"/><g mask="url(#mf)" fill="#9EC1D6"><path d="M4 50 A46 46 0 0 0 96 50 Z"/><path d="M28 50 A22 22 0 0 1 72 50 Z"/></g><circle cx="83.6" cy="18.6" r="5.4" fill="#E9EEF2"/></svg><span><span class="word">PRAPOSHAN</span><span class="tag">SLEEP × PERFORMANCE</span></span></a><p style="margin-top:18px;max-width:300px">Sleep and performance coaching, measured from start to finish.</p>
+  <div class="market" role="group" aria-label="Choose your region"><button data-m="in">India</button><button data-m="us">USA</button></div></div>
+ <div><h4>Start</h4><a href="zenith-quiz.html">ZENITH Quiz</a><a href="deep-dive.html">The Deep Dive</a><a href="programs.html">Programs</a><a href="rx.html">PRAPOSHAN Rx</a></div>
+ <div><h4>Learn</h4><a href="method.html">Our method</a><a href="blog.html">Journal</a><a href="about.html">About</a><a href="https://chat.whatsapp.com/LUxqnVDfm7QLZYiS2V3HfN" target="_blank" rel="noopener">WhatsApp community</a></div>
+ <div><h4>Policies</h4><a href="privacy.html">Privacy</a><a href="health-data.html">Consumer health data</a><a href="terms.html">Terms</a><a href="refund.html">Refunds &amp; cancellations</a><a href="mailto:praposhanppc@gmail.com">praposhanppc@gmail.com</a></div>
 </div>
-
-<script>
-  // ===================================================================
-  // TO ADD A NEW POST: add one entry to this array, then re-upload this
-  // file to GitHub. Newest posts should go at the TOP of the list.
-  //
-  //   type: "Article", "Video", or "Guide" — shown as the small tag
-  //   title: the post's headline
-  //   date: e.g. "March 2027"
-  //   excerpt: one or two sentences, shown on this index page
-  //   link: the filename of the post's own page (see blog-post-template.html)
-  //         — for a video, this can be a YouTube link directly instead
-  // ===================================================================
-  const POSTS = [
-    { type: "Article", title: "Your Brain on No Sleep: What Decades of Research Actually Show", date: "2026", excerpt: "What a 2010 meta-analysis of 70 studies found happens to attention, memory, and judgment after short-term sleep loss.", link: "brain-on-no-sleep.html" },
-    { type: "Article", title: "Snoring Isn't Just Annoying — Here's What the Research Says It's Connected To", date: "2026", excerpt: "A landmark JAMA study and the cardiometabolic research that followed it.", link: "snoring-not-just-annoying.html" },
-    { type: "Article", title: "The Insomnia Treatment More Effective Than Pills (That Almost Nobody Uses)", date: "2026", excerpt: "Why CBT-I is the first-line treatment guidelines recommend — and what it does for mental health too.", link: "cbt-i-vs-pills.html" },
-    { type: "Article", title: "The Two-Way Street Between Sleep and Mental Health", date: "2026", excerpt: "Evidence that improving sleep quality actively improves mental health outcomes, not just the reverse.", link: "two-way-street-mental-health.html" },
-    { type: "Article", title: "The 8.8-Hour Rule Nobody Told You About Your Coffee Habit", date: "2026", excerpt: "A 2023 meta-analysis pinpointed exactly when your last coffee should be.", link: "caffeine-cutoff-rule.html" },
-    { type: "Article", title: "The Nightcap Myth: What Alcohol Actually Does to Your Sleep", date: "2026", excerpt: "Falling asleep faster isn't the same as sleeping well — here's the REM data.", link: "nightcap-myth.html" },
-    { type: "Article", title: "The Overlooked Risk Factor Sitting in Your Evening Glass of Wine", date: "2026", excerpt: "The measurable link between alcohol and sleep apnea risk.", link: "overlooked-risk-evening-glass.html" },
-    { type: "Article", title: "Your Phone Is Quietly Editing Your Bedtime", date: "2026", excerpt: "The exact mechanism by which screens delay your body's melatonin release.", link: "phone-editing-bedtime.html" },
-    { type: "Article", title: "Why You Can't Cram Your Way to Remembering Anything", date: "2026", excerpt: "Sleep before AND after learning both matter for memory — here's why.", link: "cant-cram-memory.html" },
-    { type: "Article", title: "Move More, Sleep Better: What the Data Actually Says About Timing", date: "2026", excerpt: "The evidence on evening workouts is more forgiving than the folklore.", link: "move-more-sleep-better.html" },
-    { type: "Article", title: "Sleep Is Doing More for Your Immune System Than You Think", date: "2026", excerpt: "A rhinovirus experiment that measured sleep's effect on catching a cold.", link: "immune-system-sleep.html" },
-    { type: "Article", title: "The Quiet Metabolic Cost of Short Sleep", date: "2026", excerpt: "The overlooked link between sleep and insulin resistance.", link: "metabolic-cost-short-sleep.html" },
-    { type: "Article", title: "The Science-Backed Case for a Midday Nap at Work", date: "2026", excerpt: "What the research says about nap timing, duration, and cognitive payoff.", link: "case-for-midday-nap.html" },
-    { type: "Article", title: "Are You Really a 'Night Owl,' or Is That Just an Excuse?", date: "2026", excerpt: "What chronotype research actually supports — and what it doesn't.", link: "night-owl-excuse.html" },
-    { type: "Article", title: "Why 'Catching Up' on Sleep This Weekend Might Be Working Against You", date: "2026", excerpt: "The term 'social jetlag,' and the dose-dependent research behind it.", link: "catching-up-working-against-you.html" },
-  ];
-
-  const NEWSLETTER_URL = 'https://script.google.com/macros/s/AKfycbzYmVyEqOMn4P66AaIl57hzWnCiYv08IY_gErJDM7qwYu6XkWyx3w8ycJbvgZGVHjM7/exec';
-  const EMAIL_RE = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
-  document.getElementById('newsletter-submit').addEventListener('click', () => {
-    const emailInput = document.getElementById('newsletter-email');
-    const status = document.getElementById('newsletter-status');
-    const email = emailInput.value.trim().toLowerCase();
-    if (!EMAIL_RE.test(email)) {
-      status.style.color = '#D0654A';
-      status.textContent = 'Enter a valid email address.';
-      return;
-    }
-    fetch(NEWSLETTER_URL, {
-      method: 'POST', mode: 'no-cors',
-      body: JSON.stringify({ action: 'newsletter_signup', email })
-    }).catch(() => {});
-    status.style.color = '#4CAF7D';
-    status.textContent = "You're in — watch your inbox.";
-    emailInput.value = '';
-  });
-
-  const container = document.getElementById('post-list');
-  if (POSTS.length === 0) {
-    container.innerHTML = '<p class="empty-note">New posts are on their way — check back soon.</p>';
-  } else {
-    container.innerHTML = POSTS.map(p => `
-      <a class="post-card" href="${p.link}" target="${p.link.startsWith('http') ? '_blank' : '_self'}">
-        <span class="post-type">${p.type}</span>
-        <div class="post-title">${p.title}</div>
-        <div class="post-date">${p.date} · By Geethika Babu</div>
-        <div class="post-excerpt">${p.excerpt}</div>
-      </a>
-    `).join('');
-  }
-</script>
-
-<!-- ===== FAQ Chat Widget ===== -->
-<style>
-  #faq-bubble { position:fixed; bottom:22px; right:22px; width:58px; height:58px; border-radius:50%; background: var(--gold); display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 18px rgba(0,0,0,0.4); z-index:999; }
-  #faq-bubble svg { width:26px; height:26px; }
-  #faq-panel { position:fixed; bottom:90px; right:22px; width:320px; max-width:calc(100vw - 40px); max-height:70vh; overflow-y:auto; background: var(--navy, #0B1B33); border:1.5px solid var(--gold); border-radius:16px; padding:20px; display:none; z-index:999; box-shadow:0 8px 30px rgba(0,0,0,0.5); }
-  #faq-panel.open { display:block; }
-  #faq-panel .faq-title { font-family:'Syne',sans-serif; font-weight:700; font-size:16px; color:#fff; margin-bottom:14px; }
-  .faq-q { display:block; width:100%; text-align:left; background: rgba(255,255,255,0.05); border:1px solid var(--border, #24365C); color:#fff; padding:11px 14px; border-radius:10px; font-size:13px; margin-bottom:8px; cursor:pointer; font-family:'DM Sans',sans-serif; }
-  .faq-q:hover { border-color: var(--gold); }
-  .faq-a { background: rgba(201,162,75,0.1); border-left:3px solid var(--gold); padding:12px 14px; border-radius:8px; font-size:12.5px; color:#C7CEDC; margin: -4px 0 10px; line-height:1.5; display:none; }
-  .faq-a.open { display:block; }
-  .faq-fallback { display:block; text-align:center; background:#25D366; color:#063d1f; text-decoration:none; padding:11px; border-radius:10px; font-weight:700; font-size:12.5px; margin-top:12px; }
-</style>
-
-<div id="faq-bubble" onclick="document.getElementById('faq-panel').classList.toggle('open')">
-  <svg viewBox="0 0 24 24" fill="#060E1C"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3 .97 4.29L2 22l5.71-.97C9 21.64 10.46 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.36 0-2.65-.32-3.79-.88l-.27-.13-2.83.48.48-2.83-.13-.27C4.32 14.65 4 13.36 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/><circle cx="8" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="16" cy="12" r="1.2"/></svg>
-</div>
-
-<div id="faq-panel">
-  <div class="faq-title">Quick Questions</div>
-  <div id="faq-list"></div>
-  <a class="faq-fallback" href="https://chat.whatsapp.com/LUxqnVDfm7QLZYiS2V3HfN" target="_blank">Still stuck? Ask us on WhatsApp</a>
-</div>
-
-<script>
-  const FAQS = [
-    { q: "What is Praposhan?", a: "Praposhan is a sleep and performance coaching company founded by Geethika Babu, combining clinical sleep science with real coaching — not generic wellness advice." },
-    { q: "What is the ZENITH Assessment?", a: "A free, 5-minute <a href='https://praposhan.github.io/zenith_results/zenith-quiz.html' style='color:var(--gold);'>assessment</a> across your sleep, daily habits, and recovery. It's the starting point for everyone — takes the guesswork out of which program actually fits you." },
-    { q: "What programs do you offer?", a: "ZENITH Reset (self-paced), the Sleep to Rise Program (full 1:1 coaching), and two specialized pathways — Calm to Rise (mental health support) and Breath to Rise (breathing & lifestyle support) — for those whose ZENITH results call for it." },
-    { q: "How much does it cost?", a: "Pricing depends on which program actually fits your results — the fastest way to get a real number is to take the free ZENITH Assessment or message us directly on WhatsApp." },
-    { q: "How do I join the free community?", a: "Tap the WhatsApp button on our Programs page — it's free for our first 200 members." },
-  ];
-  const list = document.getElementById('faq-list');
-  list.innerHTML = FAQS.map((f, i) => `
-    <button class="faq-q" onclick="document.getElementById('faq-a-${i}').classList.toggle('open')">${f.q}</button>
-    <div class="faq-a" id="faq-a-${i}">${f.a}</div>
-  `).join('');
-</script>
-<!-- ===== End FAQ Chat Widget ===== -->
-
+<div class="disclaimer">
+ <span class="us-only">PRAPOSHAN provides education and wellness coaching. It is not a medical diagnosis or treatment and does not replace care from a licensed physician. If you are in crisis, call or text 988.</span>
+ <span class="in-only">PRAPOSHAN provides education and wellness coaching. It is not a medical diagnosis or treatment and does not replace care from a doctor. For mental health support, call Tele-MANAS on 14416.</span>
+ <br>© 2026 PRAPOSHAN. All rights reserved.
+</div></div></footer>
 </body>
 </html>

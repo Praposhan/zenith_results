@@ -1,146 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-market="us">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/svg+xml" href="icon.svg">
-<title>About Praposhan — Sleep to Rise</title>
-<meta name="description" content="Meet Geethika Babu, Certified Dental Sleep Medicine Specialist and founder of Praposhan — bridging clinical sleep science with real coaching for high performers.">
+<title>About · PRAPOSHAN</title>
+<meta name="description" content="PRAPOSHAN makes the sleep deficit visible, finds its cause and fixes it with coaching measured from start to finish.">
 <link rel="canonical" href="https://praposhan.github.io/zenith_results/about.html">
-<meta property="og:title" content="About Praposhan">
-<meta property="og:description" content="The clinical background and mission behind Praposhan's sleep and performance coaching.">
+<meta property="og:title" content="About · PRAPOSHAN">
+<meta property="og:description" content="PRAPOSHAN makes the sleep deficit visible, finds its cause and fixes it with coaching measured from start to finish.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://praposhan.github.io/zenith_results/about.html">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy-deep: #060E1C; --navy: #0B1B33; --navy-2: #14264A;
-    --gold: #C9A24B; --gold-soft: #E4CD8E;
-    --ink: #FFFFFF; --sub: #AEB8CC; --card: #101F3B; --border: #24365C;
-  }
-  * { box-sizing: border-box; }
-  body { margin:0; background: var(--navy-deep); color: var(--ink); font-family:'DM Sans',sans-serif; line-height:1.6; }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 60px 24px 80px; }
-  .nav { display:flex; justify-content:space-between; align-items:center; margin-bottom:56px; font-size:13px; }
-  .nav a { color: var(--sub); text-decoration:none; margin-left:20px; }
-  .nav a:hover { color: var(--gold); }
-  .nav-cta { display:inline-block; background: var(--gold); color: var(--navy-deep) !important; padding:9px 18px; border-radius:999px; font-weight:700; font-size:12.5px; animation: navPulse 2.2s infinite; }
-  @keyframes navPulse { 0% { box-shadow: 0 0 0 0 rgba(201,162,75,0.55); } 70% { box-shadow: 0 0 0 9px rgba(201,162,75,0); } 100% { box-shadow: 0 0 0 0 rgba(201,162,75,0); } }
-  .brand { color: var(--gold); font-weight:700; letter-spacing:2px; font-size:12px; text-transform:uppercase; }
-  .kicker { color: var(--gold); font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
-  h1 { font-family:'Syne',sans-serif; font-weight:800; font-size:38px; line-height:1.2; margin:0 0 20px; }
-  h2 { font-family:'Syne',sans-serif; font-weight:700; font-size:22px; margin:44px 0 14px; color: var(--gold-soft); }
-  p { color: var(--sub); font-size:15.5px; margin:0 0 16px; }
-  .lead { color: var(--ink); font-size:18px; margin-bottom: 32px; }
-  .card { background: var(--card); border:1px solid var(--border); border-radius:14px; padding:24px; margin:16px 0; }
-  .founder-name { font-family:'Syne',sans-serif; font-weight:700; font-size:18px; color: var(--ink); margin-bottom:4px; }
-  .founder-title { color: var(--gold); font-size:13px; margin-bottom:12px; }
-  .cta { display:inline-block; background: var(--gold); color: var(--navy-deep); text-decoration:none; padding:14px 28px; border-radius:10px; font-weight:700; margin-top:12px; }
-  .principles { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:14px; margin: 20px 0; }
-  .principle { background: var(--card); border-radius:10px; padding:18px; }
-  .principle-title { font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color: var(--gold); margin-bottom:6px; }
-  .principle-desc { font-size:13px; color: var(--sub); }
-  footer { margin-top:60px; padding-top:24px; border-top:1px solid var(--border); font-size:12px; color:#5A6784; text-align:center; }
+<meta name="theme-color" content="#131518">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23131518'/%3E%3Cg transform='translate(12 12) scale(.76)'%3E%3Cpath d='M91.7 30.6 A46 46 0 1 1 71.6 9.4' fill='none' stroke='%239EC1D6' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M4 50 A46 46 0 0 0 96 50 Z' fill='%239EC1D6'/%3E%3Cpath d='M28 50 A22 22 0 0 1 72 50 Z' fill='%239EC1D6'/%3E%3Ccircle cx='83.6' cy='18.6' r='6' fill='%23E9EEF2'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/archivo-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/geist-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js"></script>
 
-  @media (max-width: 640px) {
-    .nav { flex-wrap: wrap; gap: 10px; padding: 14px 16px; justify-content: center; text-align: center; }
-    .nav > div { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; width: 100%; justify-content: center; }
-    .nav a { margin-left: 0; font-size: 12.5px; }
-    .nav-cta { order: 99; width: 100%; text-align: center; }
-  }
-</style>
-<!-- Google tag (gtag.js) — REPLACE G-X5DTYPLBSY with your real GA4 Measurement ID -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5DTYPLBSY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-X5DTYPLBSY');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-X5DTYPLBSY',{anonymize_ip:true});</script>
 </head>
 <body>
-<div class="wrap">
-  <div class="nav">
-    <a href="index.html" style="display:flex; align-items:center; gap:8px; text-decoration:none;"><img src="icon.svg" alt="Praposhan" style="width:28px; height:28px;"><span class="brand">Praposhan</span></a>
-    <div>
-      <a href="index.html">Home</a>
-      <a href="programs.html">Programs</a>
-      <a href="blog.html">Blog</a>
-      <a class="nav-cta" href="https://praposhan.github.io/zenith_results/zenith-quiz.html">Take ZENITH Quiz Now →</a>
-    </div>
-  </div>
+<header class="site-head"><div class="wrap"><a class="logo" href="index.html" aria-label="PRAPOSHAN home"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><mask id="mh"><rect width="100" height="100" fill="#fff"/><g fill="#000"><rect y="55.6" width="100" height="2.6"/><rect y="63.7" width="100" height="2.6"/><rect y="72" width="100" height="2.6"/><rect y="80.2" width="100" height="2.6"/><rect y="88.4" width="100" height="2.6"/></g></mask></defs><path d="M91.7 30.6 A46 46 0 1 1 71.6 9.4" fill="none" stroke="#9EC1D6" stroke-width="3.6" stroke-linecap="round"/><g mask="url(#mh)" fill="#9EC1D6"><path d="M4 50 A46 46 0 0 0 96 50 Z"/><path d="M28 50 A22 22 0 0 1 72 50 Z"/></g><circle cx="83.6" cy="18.6" r="5.4" fill="#E9EEF2"/></svg><span><span class="word">PRAPOSHAN</span><span class="tag">SLEEP × PERFORMANCE</span></span></a>
+<nav class="nav"><a href="method.html">Method</a><a href="deep-dive.html">Deep Dive</a><a href="programs.html">Programs</a><a href="blog.html">Journal</a><a href="about.html" class="on">About</a><a class="btn btn-ice btn-sm" href="zenith-quiz.html">Take the ZENITH Quiz</a></nav>
+<button class="menu-btn" aria-label="Menu">Menu</button></div></header>
+<main>
+<section class="hero"><div class="wrap rv"><p class="eyebrow">About PRAPOSHAN</p>
+<h1>Sleep is the lever nobody trains you to pull.</h1>
+<p class="lede">Most advice treats sleep as something to fix once everything else is handled. We think that's backwards. Sleep is the foundation, and most high performers are running on a deficit they can't see.</p></div><div class="horizon" aria-hidden="true"><div class="sun"></div><div class="sweep"></div><div class="lines"></div></div></section>
 
-  <div class="kicker">About Praposhan</div>
-  <h1>Sleep is the lever nobody trains you to pull.</h1>
-  <p class="lead">The people who most need better sleep usually have the least patience for generic wellness advice — and the least access to real clinical expertise. That's the gap Praposhan fills.</p>
+<section><div class="wrap split">
+<div class="rv"><p class="eyebrow">Why we exist</p><h2>Make the deficit visible. Find its cause. Fix it, measurably.</h2></div>
+<div class="rv"><p class="sub" style="margin-top:0">PRAPOSHAN brings together sleep science, data from the devices people already wear, and one-to-one coaching. Every client starts with measurement, every recommendation is tied to their own data, and every program is judged by whether the numbers change.</p></div>
+</div></section>
 
-  <h2>What we're building</h2>
-  <p>Most advice treats sleep like an afterthought — something you'll fix once everything else is handled. We think that's backwards. Sleep is the foundation. Most high-performers are running on a real deficit and don't even know it.</p>
-  <p>Praposhan starts with <a href="https://praposhan.github.io/zenith_results/zenith-quiz.html" style="color:var(--gold);">ZENITH</a> — a real assessment of your sleep and recovery. Then you get a coaching plan built around exactly what it finds, not generic advice.</p>
-
-  <h2>Who's behind it</h2>
-  <div class="card">
-    <div class="founder-name">Geethika Babu</div>
-    <div class="founder-title">Founder — Certified Dental Sleep Medicine Specialist &amp; Sleep and Performance Coach</div>
-    <p style="margin:0;">With expertise in sleep and dental science, nutrition, breathwork, and health coaching, Geethika has worked with over 2,000 clients on sleep and performance. She also serves as a Sleep Resident on Circle by CRED. Praposhan grew out of one clear pattern from years of practice: people fall through the gap between seeing a sleep specialist and actually getting real coaching support.</p>
-  </div>
-
-  <h2>How we work</h2>
-  <div class="principles">
-    <div class="principle"><div class="principle-title">Assess before we prescribe</div><div class="principle-desc">Every client starts with <a href="https://praposhan.github.io/zenith_results/zenith-quiz.html" style="color:var(--gold);">ZENITH</a> — no generic plans, no guessing.</div></div>
-    <div class="principle"><div class="principle-title">Coaching, not diagnosis</div><div class="principle-desc">We flag what needs clinical attention and route to the right professional — we don't pretend to be one.</div></div>
-    <div class="principle"><div class="principle-title">Built for real schedules</div><div class="principle-desc">Programs are designed around the realities of demanding work, not idealized routines.</div></div>
-    <div class="principle"><div class="principle-title">Evidence over trends</div><div class="principle-desc">Our methods draw on established sleep science, not whatever's trending this month.</div></div>
-  </div>
-
-  <h2>Start here</h2>
-  <p>Want to understand what Praposhan can actually do for you? See your own numbers first.</p>
-  <a class="cta" href="https://praposhan.github.io/zenith_results/zenith-quiz.html">Take the ZENITH Assessment</a>
-
-  <footer>Praposhan — Sleep to Rise</footer>
+<section class="band"><div class="wrap split">
+<div class="card rv">
+ <p class="eyebrow" style="margin-bottom:12px">Founder</p>
+ <h3 class="in-only">Dr Geethika Babu, BDS</h3><h3 class="us-only">Geethika Babu, BDS</h3>
+ <p class="in-only" style="color:var(--ice);margin-bottom:14px">Dental Sleep Medicine</p><p class="us-only" style="color:var(--ice);margin-bottom:14px">Sleep &amp; Performance Coach</p>
+ <ul class="list">
+  <li>Postgraduate training in Integrated Dental Sleep Medicine, NK Sleep Clinic, Bengaluru</li>
+  <li>Graduate Certificate, Health Care Administration, Canadore College, Canada</li>
+  <li class="in-only">Sleep Resident, Circle by CRED</li>
+ </ul></div>
+<div class="rv"><p class="eyebrow">Our principles</p>
+ <div class="grid" style="gap:24px">
+  <div class="lever"><h3>Evidence first</h3><p>Every method we use is grounded in published research.</p></div>
+  <div class="lever"><h3>Honest about limits</h3><p>We coach. When something needs a doctor, we say so.</p></div>
+  <div class="lever"><h3>Measured</h3><p>If it isn't changing your numbers, we change the plan.</p></div>
+ </div></div>
+</div></section>
+<section class="cta-band band"><div class="wrap rv"><p class="eyebrow">Start here</p><h2>Find your lever in five minutes.</h2><p class="lede">The free ZENITH Quiz scores your sleep, daily habits and recovery, and names the one thing to work on first.</p>
+<div class="hero-ctas"><a class="btn btn-ice" href="zenith-quiz.html">Take the free ZENITH Quiz</a><a class="btn btn-ghost" href="https://calendly.com/praposhanppc/30min" target="_blank" rel="noopener">Book a free results call</a></div>
+<p class="hero-note">5 minutes · No wearable needed · Your results by email</p></div></section>
+</main>
+<footer class="site-foot"><div class="wrap">
+<div class="foot-grid">
+ <div><a class="logo" href="index.html" aria-label="PRAPOSHAN home"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><mask id="mf"><rect width="100" height="100" fill="#fff"/><g fill="#000"><rect y="55.6" width="100" height="2.6"/><rect y="63.7" width="100" height="2.6"/><rect y="72" width="100" height="2.6"/><rect y="80.2" width="100" height="2.6"/><rect y="88.4" width="100" height="2.6"/></g></mask></defs><path d="M91.7 30.6 A46 46 0 1 1 71.6 9.4" fill="none" stroke="#9EC1D6" stroke-width="3.6" stroke-linecap="round"/><g mask="url(#mf)" fill="#9EC1D6"><path d="M4 50 A46 46 0 0 0 96 50 Z"/><path d="M28 50 A22 22 0 0 1 72 50 Z"/></g><circle cx="83.6" cy="18.6" r="5.4" fill="#E9EEF2"/></svg><span><span class="word">PRAPOSHAN</span><span class="tag">SLEEP × PERFORMANCE</span></span></a><p style="margin-top:18px;max-width:300px">Sleep and performance coaching, measured from start to finish.</p>
+  <div class="market" role="group" aria-label="Choose your region"><button data-m="in">India</button><button data-m="us">USA</button></div></div>
+ <div><h4>Start</h4><a href="zenith-quiz.html">ZENITH Quiz</a><a href="deep-dive.html">The Deep Dive</a><a href="programs.html">Programs</a><a href="rx.html">PRAPOSHAN Rx</a></div>
+ <div><h4>Learn</h4><a href="method.html">Our method</a><a href="blog.html">Journal</a><a href="about.html">About</a><a href="https://chat.whatsapp.com/LUxqnVDfm7QLZYiS2V3HfN" target="_blank" rel="noopener">WhatsApp community</a></div>
+ <div><h4>Policies</h4><a href="privacy.html">Privacy</a><a href="health-data.html">Consumer health data</a><a href="terms.html">Terms</a><a href="refund.html">Refunds &amp; cancellations</a><a href="mailto:praposhanppc@gmail.com">praposhanppc@gmail.com</a></div>
 </div>
-
-<!-- ===== FAQ Chat Widget ===== -->
-<style>
-  #faq-bubble { position:fixed; bottom:22px; right:22px; width:58px; height:58px; border-radius:50%; background: var(--gold); display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 18px rgba(0,0,0,0.4); z-index:999; }
-  #faq-bubble svg { width:26px; height:26px; }
-  #faq-panel { position:fixed; bottom:90px; right:22px; width:320px; max-width:calc(100vw - 40px); max-height:70vh; overflow-y:auto; background: var(--navy, #0B1B33); border:1.5px solid var(--gold); border-radius:16px; padding:20px; display:none; z-index:999; box-shadow:0 8px 30px rgba(0,0,0,0.5); }
-  #faq-panel.open { display:block; }
-  #faq-panel .faq-title { font-family:'Syne',sans-serif; font-weight:700; font-size:16px; color:#fff; margin-bottom:14px; }
-  .faq-q { display:block; width:100%; text-align:left; background: rgba(255,255,255,0.05); border:1px solid var(--border, #24365C); color:#fff; padding:11px 14px; border-radius:10px; font-size:13px; margin-bottom:8px; cursor:pointer; font-family:'DM Sans',sans-serif; }
-  .faq-q:hover { border-color: var(--gold); }
-  .faq-a { background: rgba(201,162,75,0.1); border-left:3px solid var(--gold); padding:12px 14px; border-radius:8px; font-size:12.5px; color:#C7CEDC; margin: -4px 0 10px; line-height:1.5; display:none; }
-  .faq-a.open { display:block; }
-  .faq-fallback { display:block; text-align:center; background:#25D366; color:#063d1f; text-decoration:none; padding:11px; border-radius:10px; font-weight:700; font-size:12.5px; margin-top:12px; }
-</style>
-
-<div id="faq-bubble" onclick="document.getElementById('faq-panel').classList.toggle('open')">
-  <svg viewBox="0 0 24 24" fill="#060E1C"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3 .97 4.29L2 22l5.71-.97C9 21.64 10.46 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.36 0-2.65-.32-3.79-.88l-.27-.13-2.83.48.48-2.83-.13-.27C4.32 14.65 4 13.36 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/><circle cx="8" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="16" cy="12" r="1.2"/></svg>
-</div>
-
-<div id="faq-panel">
-  <div class="faq-title">Quick Questions</div>
-  <div id="faq-list"></div>
-  <a class="faq-fallback" href="https://chat.whatsapp.com/LUxqnVDfm7QLZYiS2V3HfN" target="_blank">Still stuck? Ask us on WhatsApp</a>
-</div>
-
-<script>
-  const FAQS = [
-    { q: "What is Praposhan?", a: "Praposhan is a sleep and performance coaching company founded by Geethika Babu, combining clinical sleep science with real coaching — not generic wellness advice." },
-    { q: "What is the ZENITH Assessment?", a: "A free, 5-minute <a href='https://praposhan.github.io/zenith_results/zenith-quiz.html' style='color:var(--gold);'>assessment</a> across your sleep, daily habits, and recovery. It's the starting point for everyone — takes the guesswork out of which program actually fits you." },
-    { q: "What programs do you offer?", a: "ZENITH Reset (self-paced), the Sleep to Rise Program (full 1:1 coaching), and two specialized pathways — Calm to Rise (mental health support) and Breath to Rise (breathing & lifestyle support) — for those whose ZENITH results call for it." },
-    { q: "How much does it cost?", a: "Pricing depends on which program actually fits your results — the fastest way to get a real number is to take the free ZENITH Assessment or message us directly on WhatsApp." },
-    { q: "How do I join the free community?", a: "Tap the WhatsApp button on our Programs page — it's free for our first 200 members." },
-  ];
-  const list = document.getElementById('faq-list');
-  list.innerHTML = FAQS.map((f, i) => `
-    <button class="faq-q" onclick="document.getElementById('faq-a-${i}').classList.toggle('open')">${f.q}</button>
-    <div class="faq-a" id="faq-a-${i}">${f.a}</div>
-  `).join('');
-</script>
-<!-- ===== End FAQ Chat Widget ===== -->
-
+<div class="disclaimer">
+ <span class="us-only">PRAPOSHAN provides education and wellness coaching. It is not a medical diagnosis or treatment and does not replace care from a licensed physician. If you are in crisis, call or text 988.</span>
+ <span class="in-only">PRAPOSHAN provides education and wellness coaching. It is not a medical diagnosis or treatment and does not replace care from a doctor. For mental health support, call Tele-MANAS on 14416.</span>
+ <br>© 2026 PRAPOSHAN. All rights reserved.
+</div></div></footer>
 </body>
 </html>

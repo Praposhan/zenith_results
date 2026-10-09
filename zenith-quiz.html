@@ -3,38 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The ZENITH Assessment — Praposhan</title>
-<link rel="icon" type="image/svg+xml" href="icon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<title>ZENITH Assessment — PRAPOSHAN</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23131518'/%3E%3Cg transform='translate(12 12) scale(.76)'%3E%3Cpath d='M91.7 30.6 A46 46 0 1 1 71.6 9.4' fill='none' stroke='%239EC1D6' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M4 50 A46 46 0 0 0 96 50 Z' fill='%239EC1D6'/%3E%3Cpath d='M28 50 A22 22 0 0 1 72 50 Z' fill='%239EC1D6'/%3E%3Ccircle cx='83.6' cy='18.6' r='6' fill='%23E9EEF2'/%3E%3C/g%3E%3C/svg%3E">
+<meta name="theme-color" content="#131518">
+<style>
+@font-face{font-family:"Syncopate";src:url(assets/fonts/syncopate-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Archivo";src:url(assets/fonts/archivo-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Archivo";src:url(assets/fonts/archivo-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Geist";src:url(assets/fonts/geist-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Geist";src:url(assets/fonts/geist-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Geist";src:url(assets/fonts/geist-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(assets/fonts/geist-mono-400.woff2) format("woff2");font-weight:400;font-display:swap}
+</style>
 <style>
   :root {
-    --navy-deep: #060E1C;
-    --navy: #0B1B33;
-    --navy-2: #14264A;
-    --gold: #C9A24B;
-    --gold-soft: #E4CD8E;
-    --amber: #C77B3D;
-    --ink: #FFFFFF;
-    --sub: #AEB8CC;
-    --card: #101F3B;
-    --card-2: #16295099;
-    --border: #24365C;
-    --danger-bg: #E7EEF5;
-    --danger-ink: #16233B;
+    /* Graphite & ice */
+    --navy-deep: #131518;   /* page background */
+    --navy: #16191D;
+    --navy-2: #23272C;      /* hover / selected surface */
+    --gold: #9EC1D6;        /* accent: ice */
+    --gold-soft: #C9DDE9;
+    --amber: #D4A27A;       /* baseline tier, warm but calm */
+    --green: #7CC4A0;
+    --ink: #E9EEF2;
+    --sub: #9AA3AD;
+    --card: #1B1E22;
+    --card-2: #1B1E2299;
+    --border: #2C3137;
+    --danger-bg: #E9EEF2;
+    --danger-ink: #131518;
   }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --ink: #FFFFFF; }
+    :root:not([data-theme="light"]) { --ink: #E9EEF2; }
   }
-  :root[data-theme="dark"] { --ink: #FFFFFF; }
+  :root[data-theme="dark"] { --ink: #E9EEF2; }
 
   * { box-sizing: border-box; }
   html, body {
     margin: 0; padding: 0;
     background: var(--navy-deep);
     color: var(--ink);
-    font-family: 'DM Sans', -apple-system, sans-serif;
+    font-family: 'Geist', -apple-system, sans-serif;
     min-height: 100vh;
   }
   #app {
@@ -54,10 +63,19 @@
     color: var(--gold);
     text-transform: uppercase;
   }
+  .brand { color: var(--ink) !important; text-transform: uppercase !important; font-family: 'Syncopate', 'Archivo', sans-serif; font-weight: 400 !important; font-size: 15px !important; letter-spacing: 0.32em !important; }
+  .brand .word { margin-right: -0.32em; }
+  .brand .tagline { font-family: 'Geist', sans-serif; font-size: 8.5px; letter-spacing: .42em; color: var(--sub); margin-top: 6px; }
+  .brand .mark { width: 26px; height: 26px; }
+  .brand .sub { color: var(--sub); font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 400; margin-left: 2px; }
+  .event-reset { display:block; width:100%; margin-top:14px; background: var(--gold); color: var(--navy-deep); border:none; padding:16px; border-radius:999px; font-family:'Geist',sans-serif; font-weight:600; font-size:15px; cursor:pointer; }
+  .event-note { text-align:center; font-size:12px; color: var(--sub); margin-top:8px; }
+  .support-line { font-size: 12.5px; color: var(--sub); line-height: 1.55; text-align: center; margin: 4px 0 0; }
+  .cta-block ul { margin: 0 0 14px; padding-left: 18px; font-size: 13.5px; color: var(--sub); line-height: 1.6; }
   .segbar { display: flex; gap: 5px; margin: 14px 0 8px; }
   .seg { flex: 1; height: 6px; background: var(--navy-2); border-radius: 999px; overflow: hidden; }
   .seg-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-soft)); border-radius: 999px; transition: width 0.35s ease; }
-  .seg-current .seg-fill { box-shadow: 0 0 6px var(--gold); }
+  .seg-current .seg-fill { box-shadow: 0 0 8px rgba(158,193,214,.55); }
   .segbar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--sub); font-weight: 600; letter-spacing: 0.3px; margin-bottom: 22px; }
   .card {
     flex: 1;
@@ -76,17 +94,19 @@
     margin-bottom: 10px;
   }
   h1.hero-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 30px;
-    line-height: 1.2;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 500;
+    font-size: 31px;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
     margin: 0 0 14px;
   }
   .prompt {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 500;
     font-size: 22px;
     line-height: 1.35;
+    letter-spacing: -0.005em;
     margin: 0 0 22px;
   }
   .body-text {
@@ -102,23 +122,23 @@
     border: 1.5px solid var(--border);
     color: var(--ink);
     padding: 16px 18px;
-    border-radius: 12px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14.5px;
+    border-radius: 14px;
+    font-family: 'Geist', sans-serif;
+    font-size: 15px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.15s ease;
   }
   .opt-btn:hover { border-color: var(--gold); background: var(--navy-2); }
   .opt-btn.selected { border-color: var(--gold); background: var(--navy-2); box-shadow: 0 0 0 1px var(--gold); }
-  input[type="text"], input[type="email"] {
+  input[type="text"], input[type="email"], input[type="tel"], input[type="number"] {
     width: 100%;
     background: var(--card);
     border: 1.5px solid var(--border);
     color: var(--ink);
     padding: 16px 18px;
     border-radius: 12px;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Geist', sans-serif;
     font-size: 15px;
     margin-bottom: 18px;
   }
@@ -133,9 +153,9 @@
     color: var(--navy-deep);
     border: none;
     padding: 16px;
-    border-radius: 12px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 700;
+    border-radius: 999px;
+    font-family: 'Geist', sans-serif;
+    font-weight: 600;
     font-size: 15px;
     cursor: pointer;
     width: 100%;
@@ -159,7 +179,7 @@
     font-size: 14.5px;
     font-weight: 700;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 999px;
     cursor: pointer;
     text-align: center;
   }
@@ -184,13 +204,13 @@
     margin: 8px auto 6px;
   }
   .score-circle.baseline { border-color: var(--amber); }
-  .score-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 40px; }
+  .score-num { font-family: 'Geist Mono', monospace; font-weight: 500; font-size: 42px; letter-spacing: -0.02em; }
   .score-tier { color: var(--gold); font-weight: 700; letter-spacing: 1px; font-size: 13px; }
   .score-tier.baseline { color: var(--amber); }
   .archetype-line { text-align: center; color: var(--gold); font-size: 12.5px; font-weight: 700; letter-spacing: 0.5px; margin: 6px 0 20px; text-transform: uppercase; }
   .breakdown { display: flex; gap: 10px; margin: 0 0 18px; }
   .breakdown .item { flex: 1; background: var(--card); border-radius: 10px; padding: 12px 8px; text-align: center; }
-  .breakdown .val { font-family: 'Syne', sans-serif; font-size: 19px; font-weight: 800; }
+  .breakdown .val { font-family: 'Geist Mono', monospace; font-size: 19px; font-weight: 500; }
   .breakdown .lbl { font-size: 10.5px; color: var(--sub); margin-top: 3px; }
   .driver-line { background: var(--card); border-radius: 10px; padding: 13px 16px; font-size: 13.5px; margin-bottom: 16px; }
   .driver-line strong { color: var(--gold); }
@@ -204,15 +224,15 @@
   .cta-block { background: var(--card); border: 1.5px solid var(--gold); border-radius: 14px; padding: 20px; margin-bottom: 14px; }
   .cta-block.highlight { background: linear-gradient(135deg, var(--navy-2), var(--card)); }
   .cta-label { color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
-  .cta-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 8px; }
+  .cta-title { font-family: 'Archivo', sans-serif; font-weight: 500; font-size: 18px; margin-bottom: 8px; }
   .cta-desc { font-size: 13.5px; color: var(--sub); margin-bottom: 14px; line-height: 1.5; }
   .btn-whatsapp {
     display: block; text-align: center; background: #25D366; color: #063d1f;
-    text-decoration: none; padding: 15px; border-radius: 10px; font-weight: 700; font-size: 14.5px;
+    text-decoration: none; padding: 15px; border-radius: 999px; font-weight: 600; font-size: 14.5px;
   }
   .btn-book {
     display: block; text-align: center; background: transparent; color: var(--gold);
-    border: 1.5px solid var(--gold); text-decoration: none; padding: 14px; border-radius: 10px;
+    border: 1.5px solid var(--gold); text-decoration: none; padding: 14px; border-radius: 999px;
     font-weight: 700; font-size: 14px; margin-top: 10px;
   }
   .disclaimer { font-size: 11px; color: #5A6784; text-align: center; margin-top: 18px; line-height: 1.5; }
@@ -322,17 +342,51 @@ const SB_NECK = { id:'sb_neck', prompt:'What is your shirt collar or neck size (
   {label:'Under 16 in / 40 cm', val:'small'},{label:'16 to 17 in / 40 to 43 cm', val:'medium'},{label:'Over 17 in / 43 cm', val:'large'}] };
 
 const WHATSAPP_LINK = 'https://chat.whatsapp.com/LUxqnVDfm7QLZYiS2V3HfN';
-const CALENDLY_LINK = 'https://calendly.com/praposhanppc/30min'; // used for Sleep to Rise / ZENITH Reset / Breath to Rise
-const PSYCHOLOGIST_CALLBACK_EMAIL = 'praposhanppc@gmail.com'; // placeholder until real Calm to Rise booking link exists
+const CALENDLY_LINK = 'https://calendly.com/praposhanppc/30min'; // free results call
+const PSYCHOLOGIST_CALLBACK_EMAIL = 'praposhanppc@gmail.com'; // until the psychologist partner's booking link exists
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYmVyEqOMn4P66AaIl57hzWnCiYv08IY_gErJDM7qwYu6XkWyx3w8ycJbvgZGVHjM7/exec';
 let hasSubmitted = false;
+// iPad / event mode: open the quiz with ?event=<name> (e.g. ?event=oct9) to tag responses and reset between people
+const URL_PARAMS = new URLSearchParams(location.search);
+const EVENT_TAG = (URL_PARAMS.get('event') || '').trim().slice(0, 40);
+const EVENT_MODE = EVENT_TAG.length > 0;
+function resetForNextPerson() {
+  try { localStorage.removeItem('zenith_progress'); } catch (e) {}
+  location.replace(location.pathname + location.search);
+}
+if (EVENT_MODE) {
+  let idleTimer;
+  const IDLE_MS = 3 * 60 * 1000; // back to the start after 3 minutes untouched
+  const armIdle = () => { clearTimeout(idleTimer); idleTimer = setTimeout(() => { if (step > 0) resetForNextPerson(); }, IDLE_MS); };
+  ['click','touchstart','keydown','input'].forEach(ev => document.addEventListener(ev, armIdle, { passive: true }));
+  armIdle();
+}
 
 function mailtoCallbackLink(name) {
-  const subject = encodeURIComponent('Calm to Rise — Callback Request');
+  const subject = encodeURIComponent('Callback request — psychologist partner');
   const body = encodeURIComponent(
-    'Hi,\n\nI just completed the ZENITH assessment and would like to request a callback about additional support (Calm to Rise).\n\nName: ' + (name || '') + '\n'
+    'Hi,\n\nI just completed the ZENITH assessment and would like to request a callback from your psychologist partner.\n\nName: ' + (name || '') + '\n'
   );
   return 'mailto:' + PSYCHOLOGIST_CALLBACK_EMAIL + '?subject=' + subject + '&body=' + body;
+}
+
+// Every answer as "Question → chosen option", in quiz order, for the sheet and the review tab
+function readableResponses() {
+  const out = [];
+  const groups = [['Sleep', SA_QUESTIONS], ['Wellbeing', SAFETY_QUESTIONS], ['Breathing', BREATHING_QUESTIONS],
+                  ['Daily habits', LI_QUESTIONS], ['Recovery', OP_QUESTIONS]];
+  groups.forEach(([section, qs]) => qs.forEach(q => {
+    const opt = q.options.find(o => o.pts === answers[q.id]);
+    out.push({ id: q.id, section: section, question: q.prompt, answer: opt ? opt.label : '', points: answers[q.id] !== undefined ? answers[q.id] : '' });
+  }));
+  [SB_TIRED, SB_BP, SB_GENDER, SB_NECK].forEach(q => {
+    if (answers[q.id] === undefined) return;
+    const opt = q.options.find(o => (o.pts !== undefined ? o.pts : o.val) === answers[q.id]);
+    out.push({ id: q.id, section: 'Breathing follow-up', question: q.prompt, answer: opt ? opt.label : String(answers[q.id]), points: '' });
+  });
+  if (answers.sb_heightIn) out.push({ id: 'sb_heightIn', section: 'Breathing follow-up', question: 'Height (inches)', answer: String(answers.sb_heightIn), points: '' });
+  if (answers.sb_weightLb) out.push({ id: 'sb_weightLb', section: 'Breathing follow-up', question: 'Weight (pounds)', answer: String(answers.sb_weightLb), points: '' });
+  return out;
 }
 
 function submitToSheet(r) {
@@ -354,7 +408,13 @@ function submitToSheet(r) {
     stopBangScore: answers.stopBangScore !== undefined ? answers.stopBangScore : '',
     stopBangRisk: answers.stopBangRisk || '',
     hasCalmToRise: answers.hasCalmToRise === true,
-    hasBreathToRise: answers.hasBreathToRise === true
+    hasBreathToRise: answers.hasBreathToRise === true,
+    phone: answers.phone || '',
+    age: answers.age || answers.sb_age || '',
+    goal: GOAL_OPTIONS[answers.goalIdx] || '',
+    work: WORK_OPTIONS[answers.workIdx] || '',
+    responses: readableResponses(),
+    source: EVENT_MODE ? ('event: ' + EVENT_TAG) : 'web'
   };
   fetch(APPS_SCRIPT_URL, {
     method: 'POST',
@@ -367,7 +427,7 @@ function submitToSheet(r) {
 let screens = [];
 screens.push({ type:'welcome' });
 SA_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'sa', q }));
-screens.push({ type:'intro', title:'Two important sets of questions before we continue', body:"Sleep Architecture done — nice work. You're just over a third through. Take your time with this next part — these help us make sure Praposhan is the right fit for where you are right now." });
+screens.push({ type:'intro', title:'Two important sets of questions before we continue', body:"Sleep Architecture done — nice work. You're just over a third through. Take your time with this next part — these help us make sure PRAPOSHAN is the right fit for where you are right now." });
 SAFETY_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'safety', q }));
 screens.push({ type:'intro', title:'Two quick questions about sleep and breathing', body:"These help us catch signals that a coaching program alone can't address." });
 BREATHING_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'breathing', q }));
@@ -401,6 +461,7 @@ const answers = {};
 const STATIC_SCREEN_COUNT = screens.length; // resume only supported within the static core, not dynamic branches
 
 function saveProgress() {
+  if (EVENT_MODE) return;
   if (step > 0 && step < STATIC_SCREEN_COUNT) {
     try { localStorage.setItem('zenith_progress', JSON.stringify({ step, answers })); } catch (e) {}
   }
@@ -426,7 +487,7 @@ function buildStopBangScreens() {
   out.push({ type: 'sb_intro' });
   out.push({ type: 'sb_q', q: SB_TIRED });
   out.push({ type: 'sb_q', q: SB_BP });
-  out.push({ type: 'sb_input', field: 'sb_age', label: 'What is your age?', placeholder: 'e.g. 42', min: 18, max: 100 });
+  if (!answers.age) out.push({ type: 'sb_input', field: 'sb_age', label: 'What is your age?', placeholder: 'e.g. 42', min: 18, max: 100 });
   out.push({ type: 'sb_q', q: SB_GENDER });
   out.push({ type: 'sb_input', field: 'sb_heightIn', label: 'What is your height, in inches? (5\'10" = 70)', placeholder: 'e.g. 70', min: 48, max: 84 });
   out.push({ type: 'sb_input', field: 'sb_weightLb', label: 'What is your weight, in pounds?', placeholder: 'e.g. 210', min: 70, max: 400 });
@@ -471,13 +532,10 @@ function pushResultsScreen() {
 }
 
 function goToNextAfterWork() {
-  const flags = currentFlags();
-  if (flags.isSafetyFlag) {
-    screens.push({ type: 'mh_end' });
-    step++;
-  } else {
-    goToAfterMentalHealth();
-  }
+  // Wellbeing and breathing flags are recorded for the PRAPOSHAN team only (sheet + notification email).
+  // Full screening (breathing risk, mental health) happens during the Deep Dive, and referrals follow it.
+  pushResultsScreen();
+  step++;
 }
 
 function goToAfterMentalHealth() {
@@ -515,7 +573,7 @@ app.addEventListener('click', (e) => {
 
 function render() {
   const s = screens[step];
-  let html = `<a href="about.html" class="brand" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;"><img src="icon.svg" alt="Praposhan" style="width:22px; height:22px;">Praposhan — Sleep to Rise</a>`;
+  let html = `<a href="index.html" class="brand" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;"><svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><defs><mask id="zm"><rect width="100" height="100" fill="#fff"/><g fill="#000"><rect x="0" y="55.6" width="100" height="2.6"/><rect x="0" y="63.7" width="100" height="2.6"/><rect x="0" y="72" width="100" height="2.6"/><rect x="0" y="80.2" width="100" height="2.6"/><rect x="0" y="88.4" width="100" height="2.6"/></g></mask></defs><path d="M91.7 30.6 A46 46 0 1 1 71.6 9.4" fill="none" stroke="var(--gold)" stroke-width="3.6" stroke-linecap="round"/><g mask="url(#zm)" fill="var(--gold)"><path d="M4 50 A46 46 0 0 0 96 50 Z"/><path d="M28 50 A22 22 0 0 1 72 50 Z"/></g><circle cx="83.6" cy="18.6" r="5.4" fill="var(--ink)"/></svg><span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1"><span class="word">PRAPOSHAN</span><span class="tagline">SLEEP × PERFORMANCE</span></span></a>`;
   if (s.type !== 'welcome' && s.type !== 'results') {
     html += renderSegmentedProgress(s, step);
   }
@@ -569,12 +627,16 @@ function renderScreen(s) {
       <input type="text" id="name-input" placeholder="First name" autocomplete="given-name">
       <input type="email" id="email-input" placeholder="Email address" autocomplete="email">
       <div id="email-error" class="field-error"></div>
+      <input type="tel" id="phone-input" placeholder="WhatsApp number with country code, e.g. +1 415 555 0123" autocomplete="tel">
+      <div id="phone-error" class="field-error"></div>
+      <input type="number" id="age-input" placeholder="Your age" min="18" max="100" inputmode="numeric">
+      <div id="age-error" class="field-error"></div>
       <div id="email-suggest" class="field-suggest" style="display:none;">
         Did you mean <strong id="suggest-domain"></strong>?
         <button type="button" id="suggest-fix" class="link-btn">Use this</button>
         <button type="button" id="suggest-keep" class="link-btn">No, it's correct</button>
       </div>
-      <div class="center-note" style="text-align:left; margin: -4px 0 14px;">We'll email your results here. Occasionally we'll share sleep &amp; performance tips too — unsubscribe anytime.</div>
+      <div class="center-note" style="text-align:left; margin: -4px 0 14px;">We'll email your results here, and use your number only to arrange your results call. ZENITH is for adults 18 and over. Occasionally we'll share sleep &amp; performance tips too — unsubscribe anytime.</div>
       <button class="btn-primary" id="name-continue" disabled>See My ZENITH Score →</button>
     `;
   }
@@ -616,11 +678,11 @@ function renderScreen(s) {
       <div class="kicker">Before Your Results</div>
       <p class="prompt">Let's take care of this part first.</p>
       <p class="body-text">A couple of your answers point to something worth addressing directly — and sleep coaching works best once this side is supported, not instead of it. Sleep and mental health run in both directions: poor sleep worsens mood and anxiety, and unmanaged mood or anxiety makes sleep coaching much less effective on its own.</p>
-      <p class="body-text">This isn't a diagnosis — it's a signal worth taking seriously. We'd like to connect you with our in-house psychologist through a Praposhan program called <strong>Calm to Rise</strong>. You can start this alongside the Sleep to Rise Program or ZENITH Reset — many clients do both together.</p>
-      <a class="btn-book" style="margin-bottom:12px; display:block;" href="${mailtoCallbackLink(answers.name)}">Request a Callback — Calm to Rise</a>
+      <p class="body-text">This isn't a diagnosis — it's a signal worth taking seriously. We'd like to connect you with our psychologist partner first. Sleep coaching can run alongside that support once you've spoken with them.</p>
+      <a class="btn-book" style="margin-bottom:12px; display:block;" href="${mailtoCallbackLink(answers.name)}">Request a callback from our psychologist partner</a>
       <a class="btn-whatsapp" href="${WHATSAPP_LINK}" target="_blank">Join the Free WhatsApp Community</a>
       <div class="booked-check">
-        <span>Already reached out for Calm to Rise?</span>
+        <span>Already in touch with a psychologist or counsellor?</span>
         <div>
           <button type="button" class="chip ${answers.hasCalmToRise === true ? 'chip-selected' : ''}" data-val="true" id="mh-booked-yes">Yes</button>
           <button type="button" class="chip ${answers.hasCalmToRise === false ? 'chip-selected' : ''}" data-val="false" id="mh-booked-no">Not yet</button>
@@ -656,12 +718,12 @@ function renderScreen(s) {
     return `
       <div class="kicker">Your Breathing Risk Score</div>
       <div class="score-circle baseline"><div class="score-num">${sb}/8</div><div class="score-tier baseline">${risk} RISK</div></div>
-      <p class="body-text" style="margin-top:20px;">This score uses STOP-BANG, a validated screening tool physicians use to estimate risk for sleep apnea — a breathing condition during sleep that only a physician can properly diagnose, typically with a sleep study. Your score suggests this is worth discussing with a physician and asking about a diagnostic sleep study.</p>
-      <p class="body-text">Whether or not that's eventually confirmed, a Praposhan program called <strong>Breath to Rise</strong> — lifestyle and breathwork support — is built to help you improve your risk factors now, and to support any treatment plan a physician puts in place later.</p>
+      <p class="body-text" style="margin-top:20px;">This score uses the same risk factors physicians use to estimate the chance of sleep apnea — a breathing condition during sleep that only a physician can properly diagnose, typically with a sleep study. Your score suggests this is worth discussing with a physician and asking about a diagnostic sleep study.</p>
+      <p class="body-text">Please see a physician before starting any sleep coaching program. Once you've been assessed, our experts can explain how coaching fits alongside your physician's plan.</p>
       <a class="btn-whatsapp" style="margin-bottom:12px;" href="${WHATSAPP_LINK}" target="_blank">Join the Free WhatsApp Community</a>
-      <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book a Breath to Rise Discovery Call</a>
+      <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book a free call with our experts</a>
       <div class="booked-check">
-        <span>Already booked your Breath to Rise call?</span>
+        <span>Already booked a physician or sleep study?</span>
         <div>
           <button type="button" class="chip ${answers.hasBreathToRise === true ? 'chip-selected' : ''}" data-val="true" id="sb-booked-yes">Yes</button>
           <button type="button" class="chip ${answers.hasBreathToRise === false ? 'chip-selected' : ''}" data-val="false" id="sb-booked-no">Not yet</button>
@@ -696,6 +758,27 @@ function attachHandlers(s) {
     const suggestBox = document.getElementById('email-suggest');
     const suggestDomainEl = document.getElementById('suggest-domain');
     const btn = document.getElementById('name-continue');
+    const phoneInput = document.getElementById('phone-input');
+    const phoneError = document.getElementById('phone-error');
+    const ageInput = document.getElementById('age-input');
+    const ageError = document.getElementById('age-error');
+
+    function phoneStatus(raw) {
+      const val = raw.trim();
+      if (val.length === 0) return { ok: false, msg: '' };
+      const digits = val.replace(/[^0-9]/g, '');
+      if (!val.startsWith('+')) return { ok: false, msg: 'Please start with your country code, e.g. +1 or +91.' };
+      if (digits.length < 8 || digits.length > 15) return { ok: false, msg: 'Please enter a valid number with country code.' };
+      return { ok: true, msg: '' };
+    }
+    function ageStatus(raw) {
+      if (raw.trim().length === 0) return { ok: false, msg: '' };
+      const n = parseInt(raw, 10);
+      if (isNaN(n)) return { ok: false, msg: 'Please enter your age as a number.' };
+      if (n < 18) return { ok: false, msg: 'ZENITH is designed for adults 18 and over.' };
+      if (n > 100) return { ok: false, msg: 'Please check your age.' };
+      return { ok: true, msg: '' };
+    }
 
     const EMAIL_RE = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
     const DISPOSABLE_DOMAINS = ['mailinator.com','guerrillamail.com','10minutemail.com','tempmail.com','temp-mail.org','throwawaymail.com','yopmail.com','trashmail.com','getnada.com','fakeinbox.com','maildrop.cc','sharklasers.com','dispostable.com','mintemail.com'];
@@ -770,14 +853,26 @@ function attachHandlers(s) {
         suggestBox.style.display = 'none';
       }
 
-      btn.disabled = !nameOk || !status.ok || hasUnresolvedSuggestion;
+      const ph = phoneStatus(phoneInput.value);
+      phoneError.textContent = ph.msg;
+      phoneInput.classList.toggle('invalid', phoneInput.value.trim().length > 0 && !ph.ok);
+      const ag = ageStatus(ageInput.value);
+      ageError.textContent = ag.msg;
+      ageInput.classList.toggle('invalid', ageInput.value.trim().length > 0 && !ag.ok);
+
+      btn.disabled = !nameOk || !status.ok || hasUnresolvedSuggestion || !ph.ok || !ag.ok;
     }
     nameInput.oninput = checkValid;
     emailInput.oninput = checkValid;
+    phoneInput.oninput = checkValid;
+    ageInput.oninput = checkValid;
     nameInput.focus();
     btn.onclick = () => {
       answers.name = nameInput.value.trim();
       answers.email = emailInput.value.trim().toLowerCase();
+      answers.phone = phoneInput.value.trim();
+      answers.age = parseInt(ageInput.value, 10);
+      answers.sb_age = answers.age;
       goToNextAfterWork(); render();
     };
   }
@@ -936,71 +1031,19 @@ function renderResults() {
   const name = answers.name || 'there';
   const tierClass = r.tier === 'BASELINE' ? 'baseline' : '';
 
-  // Affirmations for anything already handled — informational only, never a competing CTA
-  let onTrackHtml = '';
-  if (r.isSafetyFlag && answers.hasCalmToRise === true) {
-    onTrackHtml += `
-      <div class="status-block on-track">
-        <div class="cta-label">A Praposhan Program — Calm to Rise</div>
-        <div class="cta-title">You're already on the right path</div>
-        <div class="cta-desc">You've already reached out for Calm to Rise support — that's exactly the right first step. Your sleep coaching will work even better running alongside it.</div>
-      </div>`;
-  }
-  if (r.isBreathingFlag && answers.hasBreathToRise === true) {
-    onTrackHtml += `
-      <div class="status-block on-track">
-        <div class="cta-label">A Praposhan Program — Breath to Rise</div>
-        <div class="cta-title">You're already on the right path</div>
-        <div class="cta-desc">Your Breath to Rise call is already booked — exactly the right move for your breathing risk profile.</div>
-      </div>`;
-  }
-
-  // Count how many programs still genuinely need a decision (tier program always counts as one)
-  const unaddressed = [];
-  if (r.isSafetyFlag && answers.hasCalmToRise !== true) unaddressed.push('your mental health screen');
-  if (r.isBreathingFlag && answers.hasBreathToRise !== true) unaddressed.push('your breathing risk score');
-  const neededPrograms = 1 + unaddressed.length;
-
   let decisionHtml = '';
-  if (neededPrograms >= 2) {
-    const concernSentence = unaddressed.length === 2
-      ? `Your results touch on two areas worth addressing directly — ${unaddressed[0]} and ${unaddressed[1]} — alongside your general sleep and performance profile.`
-      : `Your results touch on ${unaddressed[0]}, alongside your general sleep and performance profile.`;
+  {
+    const tierLine = {
+      BASELINE: "Your pattern is clear and structural, which means it responds well to the right structure.",
+      BUILD: "Real foundations, real gaps. This is the profile a structured, measured approach is built for.",
+      PEAK: "Your foundations are strong. What's left is sharpening the edge, and that starts with measuring it."
+    }[r.tier];
     decisionHtml = `
       <div class="cta-block highlight">
-        <div class="cta-label">Let's Build The Right Plan Together</div>
-        <div class="cta-title">More than one area worth addressing</div>
-        <div class="cta-desc">${concernSentence} Rather than handing you separate programs to sort out on your own, we'd rather map this out together on one call.</div>
-        <ul>
-          <li>This is common — most people at this stage have more than one thing worth addressing</li>
-          <li>We'll walk through your full ZENITH breakdown together</li>
-          <li>You'll leave with one clear plan, not a list of programs to figure out alone</li>
-        </ul>
-        <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book Your Priority Planning Call</a>
-      </div>`;
-  } else if (r.tier === 'BASELINE') {
-    decisionHtml = `
-      <div class="cta-block highlight">
-        <div class="cta-label">A Praposhan Program — Early Access, Limited Spots</div>
-        <div class="cta-title">You qualify for the Sleep to Rise Program</div>
-        <div class="cta-desc">Your profile shows a clear, structural pattern — exactly what our full 8-week 1:1 program is built to fix. We only take a limited number of Sleep to Rise Program clients each month to keep real 1:1 attention.</div>
-        <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book Your Sleep to Rise Call</a>
-      </div>`;
-  } else if (r.tier === 'BUILD') {
-    decisionHtml = `
-      <div class="cta-block highlight">
-        <div class="cta-label">A Praposhan Program — Early Access</div>
-        <div class="cta-title">You qualify for ZENITH Reset</div>
-        <div class="cta-desc">Your profile is a strong fit for our self-paced reset program. If you'd rather go deeper with 1:1 support, you may also qualify for the Sleep to Rise Program — ask us on WhatsApp.</div>
-        <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book a Free 15-Min Consult</a>
-      </div>`;
-  } else {
-    decisionHtml = `
-      <div class="cta-block">
-        <div class="cta-label">A Praposhan Program — Sharpen The Edge</div>
-        <div class="cta-title">ZENITH Reset is open to you</div>
-        <div class="cta-desc">You're already ahead — ZENITH Reset can help you sharpen the last edge most people never optimize.</div>
-        <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book a Free 15-Min Consult</a>
+        <div class="cta-label">Your next step</div>
+        <div class="cta-title">Walk through your results with our experts</div>
+        <div class="cta-desc">${tierLine} On a free 25-minute call, our experts go through your breakdown with you and, if it's a fit, explain the 21-day Deep Dive: a measured 14-night baseline, a written report, and a plan built on your own data.</div>
+        <a class="btn-book" href="${CALENDLY_LINK}" target="_blank">Book my free results call</a>
       </div>`;
   }
 
@@ -1012,8 +1055,6 @@ function renderResults() {
     </div>
     <div class="archetype-line">${r.archetype}</div>
 
-    ${onTrackHtml}
-
     <div class="breakdown">
       <div class="item"><div class="val">${r.SA}%</div><div class="lbl">Sleep</div></div>
       <div class="item"><div class="val">${r.LI}%</div><div class="lbl">Daily Inputs</div></div>
@@ -1022,18 +1063,18 @@ function renderResults() {
     <div class="driver-line">Your biggest lever right now: <strong>${r.primaryDriver}</strong></div>
     <div class="tier-body">${TIER_COPY[r.tier]}</div>
 
-    ${(neededPrograms >= 2 || r.tier === 'BASELINE') ? decisionHtml : ''}
+    ${decisionHtml}
 
     <div class="cta-block">
       <div class="cta-label">Join Free</div>
-      <div class="cta-title">Praposhan Sleep &amp; Performance Community</div>
+      <div class="cta-title">PRAPOSHAN Sleep &amp; Performance Community</div>
       <div class="cta-desc">Daily tips, weekly new protocols, and first access to every new program — free, on WhatsApp.</div>
       <a class="btn-whatsapp" href="${WHATSAPP_LINK}" target="_blank">Join the WhatsApp Community</a>
     </div>
 
-    ${(neededPrograms >= 2 || r.tier === 'BASELINE') ? '' : decisionHtml}
-
+    <div class="support-line">If low mood, anxiety or loud snoring have been part of the picture, mention it on your call. Our experts will make sure you get the right support.</div>
     <div class="disclaimer">Your ZENITH Score is a proprietary lifestyle index built on validated screening principles (including PHQ-2 and GAD-2). It does not constitute a clinical diagnosis.</div>
+    ${EVENT_MODE ? `<button class="event-reset" onclick="resetForNextPerson()">Done — start for the next person</button><div class="event-note">Your results are also on their way to your email.</div>` : ''}
   `;
 }
 
@@ -1041,6 +1082,7 @@ logEvent('start', 'welcome');
 (function checkForSavedProgress() {
   try {
     const saved = JSON.parse(localStorage.getItem('zenith_progress'));
+    if (EVENT_MODE) { localStorage.removeItem('zenith_progress'); return; }
     if (saved && typeof saved.step === 'number' && saved.step > 0 && saved.step < STATIC_SCREEN_COUNT && saved.answers) {
       screens.unshift({ type: 'resume_prompt' });
     }
