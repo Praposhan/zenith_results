@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sleep Gap Audit · PRAPOSHAN</title>
+<meta name="description" content="60 seconds. See how much sleep you think you get, what your tracker says, and how many hours a week you're short.">
+<meta property="og:title" content="Your Sleep Gap: 60-second audit">
+<meta property="og:description" content="Most people think they sleep about 48 minutes more than they do. Find your number.">
+<meta name="theme-color" content="#131518">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<style>
+@font-face{font-family:"Syncopate";src:url(assets/fonts/syncopate-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Archivo";src:url(assets/fonts/archivo-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Geist";src:url(assets/fonts/geist-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Geist";src:url(assets/fonts/geist-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Geist";src:url(assets/fonts/geist-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(assets/fonts/geist-mono-400.woff2) format("woff2");font-weight:400;font-display:swap}
+:root{--bg:#0F1113;--card:#16191D;--card2:#1B1E22;--line:#2C3137;--ink:#E9EEF2;--sub:#9AA3AD;--ice:#9EC1D6;--ice-soft:#C9DDE9;--warm:#D4A27A;--good:#9ED7BA}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Geist",-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--ice)}
+.wrap{max-width:560px;margin:0 auto;padding:20px 16px 48px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:4px 0 20px}
+.word{font-family:"Syncopate",sans-serif;font-size:12px;letter-spacing:.3em;color:var(--ink);text-decoration:none}
+.lb{font:12px "Geist Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--sub);margin:0}
+h1{font:500 clamp(30px,8vw,40px)/1.06 "Archivo",sans-serif;letter-spacing:-.02em;margin:10px 0 12px}
+.lede{color:var(--sub);margin:0 0 24px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 16px;margin:0 0 12px}
+.q h2{font:500 17px/1.3 "Archivo",sans-serif;margin:0 0 4px}
+.q p.help{font-size:13px;color:var(--sub);margin:0 0 12px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.pill{min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink);font:500 15px "Geist",sans-serif;cursor:pointer}
+.pill[aria-pressed="true"]{border-color:var(--ice);background:rgba(158,193,214,.14);color:var(--ice-soft)}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--sub);flex:1;min-width:130px}
+select,input[type=time],input[type=email]{min-height:48px;border-radius:14px;border:1.5px solid var(--line);background:var(--card2);color:var(--ink);padding:0 12px;font:500 16px "Geist Mono",monospace;width:100%;color-scheme:dark}
+.hide{display:none}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:54px;border-radius:999px;border:0;background:var(--ice);color:#131518;font:600 16px "Geist",sans-serif;text-decoration:none;cursor:pointer}
+.btn2{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink);font:500 15px "Geist",sans-serif;text-decoration:none;cursor:pointer}
+.err{color:var(--warm);font-size:14px;margin:8px 0 0;min-height:20px}
+.hero{position:relative;overflow:hidden;background:linear-gradient(160deg,#1B2A33 0%,#16191D 65%);border:1px solid #2B4352;border-radius:24px;padding:22px 20px;margin:0 0 12px}
+.big{font:500 64px/1 "Archivo",sans-serif;letter-spacing:-.03em;margin:8px 0 6px}
+.vs{display:grid;grid-template-columns:78px 1fr 70px;gap:10px;align-items:center;font-size:13px;margin-top:10px}
+.bar{height:10px;border-radius:9px;background:#23272C;overflow:hidden}.bar i{display:block;height:100%;border-radius:9px}
+.mono{font-family:"Geist Mono",monospace}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 12px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 12px}
+.tile b{display:block;font:500 22px/1.1 "Archivo",sans-serif;margin:6px 0 4px}
+.tile span{font-size:12px;color:var(--sub)}
+.fix{background:var(--ice);color:#131518;border-radius:20px;padding:18px;margin:0 0 12px}
+.fix h3{font:500 20px/1.25 "Archivo",sans-serif;margin:4px 0 6px}
+.fix p{margin:0;font-size:14px}
+.note{font-size:13px;color:var(--sub);border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 0 12px}
+.stack{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.small{font-size:12px;color:var(--sub);text-align:center;margin:8px 0 0}
+@media (max-width:380px){.grid{grid-template-columns:1fr 1fr}.big{font-size:54px}}
+</style>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="PRAPOSHAN">
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="word" href="index.html">PRAPOSHAN</a><span class="lb">60-second audit</span></div>
+
+  <!-- FORM -->
+  <form id="audit" novalidate>
+    <p class="lb" style="color:var(--ice)">Sleep Gap Audit</p>
+    <h1>How much sleep do you actually get?</h1>
+    <p class="lede">Most people think they sleep about 48 minutes more than they do. Six questions, no sign-up. Your answers stay anonymous unless you add your email.</p>
+
+    <div class="q">
+      <h2>1. On a work night, how much do you think you sleep?</h2>
+      <p class="help">Your honest gut answer. Don't check your tracker yet.</p>
+      <div class="row">
+        <label class="f">Hours<select id="thinkH"></select></label>
+        <label class="f">Minutes<select id="thinkM"></select></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <h2>2. Do you wear a sleep tracker?</h2>
+      <div class="row" id="trackers">
+        <button type="button" class="pill" data-v="Oura">Oura</button>
+        <button type="button" class="pill" data-v="WHOOP">WHOOP</button>
+        <button type="button" class="pill" data-v="Apple Watch">Apple Watch</button>
+        <button type="button" class="pill" data-v="Garmin / Fitbit">Garmin / Fitbit</button>
+        <button type="button" class="pill" data-v="Other">Other</button>
+        <button type="button" class="pill" data-v="None">No tracker</button>
+      </div>
+      <div id="trackerBox" class="hide" style="margin-top:14px">
+        <p class="help">Now open its sleep trends and find your average total sleep for the last 30 days (or the monthly view).</p>
+        <div class="row">
+          <label class="f">Hours<select id="measH"></select></label>
+          <label class="f">Minutes<select id="measM"></select></label>
+        </div>
+      </div>
+      <div id="noTrackerBox" class="hide" style="margin-top:14px">
+        <p class="help">We'll estimate it from your times instead.</p>
+        <div class="row">
+          <label class="f">Minutes to fall asleep<select id="lat"><option>5</option><option selected>15</option><option>30</option><option>45</option><option>60</option></select></label>
+          <label class="f">Awake in the night (min)<select id="waso"><option>0</option><option selected>15</option><option>30</option><option>60</option><option>90</option></select></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="q">
+      <h2>3. On work nights, when do your lights go out?</h2>
+      <label class="f">Lights out<input type="time" id="bed" value="23:30"></label>
+    </div>
+
+    <div class="q">
+      <h2>4. When do you wake up?</h2>
+      <div class="row">
+        <label class="f">Work days<input type="time" id="wakeW" value="07:00"></label>
+        <label class="f">Days off<input type="time" id="wakeO" value="08:30"></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <h2>5. When is your last coffee, tea or energy drink?</h2>
+      <div class="row" style="align-items:flex-end">
+        <label class="f">Usual time<input type="time" id="coffee" value="16:00"></label>
+        <button type="button" class="pill" id="noCaf" aria-pressed="false">No caffeine</button>
+      </div>
+    </div>
+
+    <div class="q">
+      <h2>6. What do you do?</h2>
+      <div class="row" id="roles">
+        <button type="button" class="pill" data-v="Founder">Founder</button>
+        <button type="button" class="pill" data-v="Executive">Executive</button>
+        <button type="button" class="pill" data-v="Engineer / builder">Engineer / builder</button>
+        <button type="button" class="pill" data-v="Other professional">Other</button>
+      </div>
+    </div>
+
+    <p class="err" id="err" role="alert"></p>
+    <button class="btn" type="submit">Show my Sleep Gap</button>
+    <p class="small">Coaching insight, not a medical test.</p>
+  </form>
+
+  <!-- RESULTS -->
+  <section id="res" class="hide" aria-live="polite">
+    <div class="hero">
+      <p class="lb" style="color:var(--ice)">Your Sleep Gap</p>
+      <div class="big" id="gapBig">−65 min</div>
+      <p style="margin:0;color:var(--sub);font-size:14px" id="gapLine">a night between what you feel and what you get</p>
+      <div class="vs"><span style="color:var(--sub)">You think</span><div class="bar"><i id="barT" style="background:#4A515A"></i></div><span class="mono" id="thinkTxt"></span></div>
+      <div class="vs"><span style="color:var(--sub)" id="measLbl">Measured</span><div class="bar"><i id="barM" style="background:var(--ice)"></i></div><span class="mono" id="measTxt"></span></div>
+    </div>
+
+    <div class="grid">
+      <div class="tile"><span>Below 7 h</span><b id="shortB"></b><span>a week</span></div>
+      <div class="tile"><span>Days-off shift</span><b id="jlB"></b><span>wake later</span></div>
+      <div class="tile"><span>Caffeine</span><b id="cafB"></b><span>before bed</span></div>
+    </div>
+
+    <div class="fix">
+      <p class="lb" style="color:#2B4352">Your first fix</p>
+      <h3 id="fixH"></h3>
+      <p id="fixP"></p>
+    </div>
+
+    <div class="note">You're not alone: 669 adults reported 6.8 hours a night; wrist sensors measured 6.0 (Lauderdale et al., <i>Epidemiology</i>, 2008). Short sleep costs the US an estimated $411B a year (RAND, 2016).</div>
+
+    <div class="q">
+      <h2>Get your 7-day fix plan by email</h2>
+      <p class="help">Your numbers plus seven small steps. One email, no spam.</p>
+      <div class="row">
+        <label class="f" style="flex:2">Email<input type="email" id="email" placeholder="you@company.com" autocomplete="email"></label>
+      </div>
+      <p class="err" id="err2" role="status"></p>
+      <button class="btn" type="button" id="sendPlan">Email me the plan</button>
+    </div>
+
+    <div class="stack">
+      <a class="btn2" id="share" href="#">Copy my result to share</a>
+      <a class="btn2" id="callBtn" href="https://calendly.com/praposhanppc/30min" target="_blank" rel="noopener">Book a free 25-minute results call</a>
+      <a class="btn2" href="deep-dive.html">See the 21-day Deep Dive ($300)</a>
+    </div>
+    <p class="small">PRAPOSHAN turns your sleep and lifestyle data into productive hours. Coaching, not medical care.</p>
+  </section>
+</div>
+
+<script>
+var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzYmVyEqOMn4P66AaIl57hzWnCiYv08IY_gErJDM7qwYu6XkWyx3w8ycJbvgZGVHjM7/exec';
+var US_TZ = /^America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Anchorage|Detroit|Boise|Juneau|Sitka|Nome|Adak|Metlakatla|Yakutat|Menominee|Indiana\/.+|Kentucky\/.+|North_Dakota\/.+)$|^Pacific\/Honolulu$|^US\//;
+var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+var market = US_TZ.test(tz) ? 'US' : (/^Asia\/(Kolkata|Calcutta)$/.test(tz) ? 'India' : 'Other');
+var qs = new URLSearchParams(location.search);
+var src = qs.get('utm_source') || qs.get('src') || (document.referrer ? new URL(document.referrer).hostname : 'direct');
+var sid = Math.random().toString(36).slice(2, 10);
+var state = { tracker: '', role: '', noCaf: false }, result = null;
+
+function post(payload) {
+  payload.sid = sid; payload.tz = tz; payload.market = market; payload.source = src;
+  payload.page = 'sleep-gap'; payload.lang = navigator.language || '';
+  try { fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) }); } catch (e) {}
+}
+post({ action: 'audit_view' });
+
+function fill(sel, from, to, step, def, fmt) {
+  for (var v = from; v <= to; v += step) {
+    var o = document.createElement('option'); o.value = v; o.textContent = fmt ? fmt(v) : v; if (v === def) o.selected = true; sel.appendChild(o);
+  }
+}
+fill(document.getElementById('thinkH'), 3, 10, 1, 7);
+fill(document.getElementById('thinkM'), 0, 45, 15, 30, function (v) { return (v < 10 ? '0' : '') + v; });
+fill(document.getElementById('measH'), 2, 10, 1, 6);
+fill(document.getElementById('measM'), 0, 55, 5, 30, function (v) { return (v < 10 ? '0' : '') + v; });
+
+function pills(id, key, onPick) {
+  var box = document.getElementById(id);
+  box.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    box.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    state[key] = b.dataset.v; if (onPick) onPick(b.dataset.v);
+  });
+  box.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+}
+pills('trackers', 'tracker', function (v) {
+  document.getElementById('trackerBox').classList.toggle('hide', v === 'None');
+  document.getElementById('noTrackerBox').classList.toggle('hide', v !== 'None');
+});
+pills('roles', 'role');
+document.getElementById('noCaf').addEventListener('click', function () {
+  state.noCaf = !state.noCaf; this.setAttribute('aria-pressed', state.noCaf);
+  document.getElementById('coffee').disabled = state.noCaf;
+});
+
+function mins(t) { if (!t) return null; var p = t.split(':'); return Number(p[0]) * 60 + Number(p[1]); }
+function hm(m) { m = Math.round(m); var s = m < 0 ? '−' : ''; m = Math.abs(m); var h = Math.floor(m / 60), r = m % 60; return s + (h ? h + ' h ' : '') + (r < 10 && h ? '0' : '') + r + (h ? '' : ' min'); }
+function clock(m) { m = ((Math.round(m) % 1440) + 1440) % 1440; var h = Math.floor(m / 60), r = m % 60; return (h % 12 || 12) + ':' + (r < 10 ? '0' : '') + r + (h < 12 ? ' am' : ' pm'); }
+
+document.getElementById('audit').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var err = document.getElementById('err');
+  if (!state.tracker) { err.textContent = 'Pick your tracker, or "No tracker".'; return; }
+  if (!state.role) { err.textContent = 'Pick what you do.'; return; }
+  err.textContent = '';
+
+  var think = Number(document.getElementById('thinkH').value) * 60 + Number(document.getElementById('thinkM').value);
+  var bed = mins(document.getElementById('bed').value);
+  var wakeW = mins(document.getElementById('wakeW').value), wakeO = mins(document.getElementById('wakeO').value);
+  var inBed = ((wakeW - bed) + 1440) % 1440;
+  var measured, estimated = false;
+  if (state.tracker === 'None') {
+    measured = inBed - Number(document.getElementById('lat').value) - Number(document.getElementById('waso').value); estimated = true;
+  } else {
+    measured = Number(document.getElementById('measH').value) * 60 + Number(document.getElementById('measM').value);
+  }
+  var gap = measured - think;
+  var shortWeek = Math.max(0, 420 - measured) * 7 / 60;
+  var shift = Math.max(0, wakeO - wakeW);
+  var caf = state.noCaf ? null : ((bed - mins(document.getElementById('coffee').value)) + 1440) % 1440;
+
+  var fix;
+  if (shortWeek >= 3.5 && inBed >= 465) {
+    fix = ['Find what steals your sleep', 'You give yourself ' + hm(inBed) + ' in bed but sleep ' + hm(measured) + '. More time in bed won\'t fix that; finding the cause will. That is exactly what our 21-day Deep Dive measures.'];
+  } else if (shortWeek >= 3.5) {
+    fix = ['Protect a 7.5-hour window', 'Lights out by ' + clock(wakeW - 450) + ' on work nights for the next 7 days. That alone wins back about ' + Math.round(shortWeek) + ' hours a week.'];
+  } else if (shift >= 60) {
+    fix = ['Wake at the same time, 7 days a week', 'Your days-off wake-up is ' + hm(shift) + ' later, which shifts your body clock every Monday. Try ' + clock(wakeW) + ' every day for 2 weeks.'];
+  } else if (caf !== null && caf < 528) {
+    fix = ['Move your last coffee to ' + clock(bed - 540), 'Caffeine keeps working for hours. A 2023 meta-analysis suggests your last dose about 9 hours before bed.'];
+  } else if (gap <= -30) {
+    fix = ['Trust the data, not the feeling', 'You feel rested on less sleep than you need. Measure for 21 days before changing anything big.'];
+  } else {
+    fix = ['Keep it steady', 'Your numbers look solid. The next gains come from timing your hardest work to your best hours.'];
+  }
+
+  result = { think: think, measured: measured, estimated: estimated, gap: gap, shortWeek: shortWeek, shift: shift, caf: caf, fix: fix[0] };
+
+  document.getElementById('gapBig').textContent = gap >= 0 ? '+' + hm(gap).replace('−', '') : hm(gap);
+  document.getElementById('gapLine').textContent = gap < 0 ? 'a night less than you think you sleep' : 'a night more than you think: nice';
+  var max = Math.max(think, measured, 1);
+  document.getElementById('barT').style.width = (think / max * 100) + '%';
+  document.getElementById('barM').style.width = (measured / max * 100) + '%';
+  document.getElementById('thinkTxt').textContent = hm(think);
+  document.getElementById('measTxt').textContent = hm(measured);
+  document.getElementById('measLbl').textContent = estimated ? 'Estimated' : state.tracker;
+  document.getElementById('shortB').textContent = shortWeek ? shortWeek.toFixed(1) + ' h' : '0 h';
+  document.getElementById('jlB').textContent = shift ? '+' + hm(shift) : 'None';
+  document.getElementById('cafB').textContent = caf === null ? 'None' : (caf / 60).toFixed(1) + ' h';
+  document.getElementById('fixH').textContent = fix[0];
+  document.getElementById('fixP').textContent = fix[1];
+
+  document.getElementById('audit').classList.add('hide');
+  document.getElementById('res').classList.remove('hide');
+  window.scrollTo(0, 0);
+
+  post({ action: 'audit', tracker: state.tracker, role: state.role, thinkMin: think, measuredMin: measured,
+    estimated: estimated, gapMin: gap, shortHrsWeek: Math.round(shortWeek * 10) / 10, shiftMin: shift,
+    caffeineHrsBeforeBed: caf === null ? '' : Math.round(caf / 6) / 10, bed: document.getElementById('bed').value,
+    wakeWork: document.getElementById('wakeW').value, wakeOff: document.getElementById('wakeO').value, fix: fix[0] });
+});
+
+document.getElementById('sendPlan').addEventListener('click', function () {
+  var em = document.getElementById('email').value.trim(), out = document.getElementById('err2');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { out.textContent = 'Please check your email address.'; return; }
+  post({ action: 'audit_email', email: em, tracker: state.tracker, role: state.role, gapMin: result.gap,
+    measuredMin: result.measured, thinkMin: result.think, shortHrsWeek: Math.round(result.shortWeek * 10) / 10,
+    shiftMin: result.shift, caffeineHrsBeforeBed: result.caf === null ? '' : Math.round(result.caf / 6) / 10, fix: result.fix });
+  out.textContent = 'Sent. Check your inbox in a few minutes.';
+  this.disabled = true; this.textContent = 'Plan on its way';
+});
+
+document.getElementById('share').addEventListener('click', function (e) {
+  e.preventDefault();
+  var t = 'My Sleep Gap: I think I sleep ' + hm(result.think) + '. ' + (result.estimated ? 'My times say ' : 'My ' + state.tracker + ' says ') + hm(result.measured) + '. Find yours in 60 seconds: ' + location.origin + location.pathname + '?src=share';
+  var self = this;
+  (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { self.textContent = 'Copied. Paste it anywhere'; })
+    .catch(function () { self.textContent = t; });
+  post({ action: 'audit_share' });
+});
+document.getElementById('callBtn').addEventListener('click', function () { post({ action: 'audit_call_click' }); });
+</script>
+</body>
+</html>
