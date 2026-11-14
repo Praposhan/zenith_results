@@ -10,13 +10,14 @@
   "background_color": "#131518",
   "theme_color": "#131518",
   "icons": [
-    {"src": "assets/app/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
-    {"src": "assets/app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
-    {"src": "assets/app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
   ],
   "shortcuts": [
-    {"name": "Sleep Gap Audit", "url": "./sleep-gap.html?src=app", "icons": [{"src": "assets/app/icon-192.png", "sizes": "192x192"}]},
-    {"name": "ZENITH Quiz", "url": "./zenith-quiz.html?src=app", "icons": [{"src": "assets/app/icon-192.png", "sizes": "192x192"}]},
+    {"name": "Sleep Gap Audit", "url": "./sleep-gap.html?src=app", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
+    {"name": "ZENITH Quiz", "url": "./zenith-quiz.html?src=app", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
     {"name": "Book a results call", "url": "https://calendly.com/praposhanppc/30min"}
   ]
 }
+
