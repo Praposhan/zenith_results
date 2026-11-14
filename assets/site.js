@@ -45,3 +45,18 @@
     });
   });
 })();
+
+// Install as app (Android/Chrome): show a small button when the browser allows it
+(function () {
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault(); deferred = e;
+    if (document.getElementById('install-app')) return;
+    var b = document.createElement('button');
+    b.id = 'install-app'; b.type = 'button'; b.textContent = 'Install the PRAPOSHAN app';
+    b.style.cssText = 'position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:60;background:#9EC1D6;color:#131518;border:0;border-radius:999px;padding:12px 20px;font:600 14px Geist,system-ui,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.45);cursor:pointer';
+    b.onclick = function () { deferred.prompt(); deferred.userChoice.finally(function () { b.remove(); deferred = null; }); };
+    document.body.appendChild(b);
+  });
+  window.addEventListener('appinstalled', function () { var b = document.getElementById('install-app'); if (b) b.remove(); });
+})();
