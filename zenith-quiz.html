@@ -337,6 +337,7 @@ const GOAL_OPTIONS = ['More energy and mental sharpness','Better sleep','Reduce 
 const GOAL_LABELS = ['Energy & Sharpness','Sleep Quality','Stress & Anxiety','Recovery & Performance','Full Optimization'];
 const WORK_OPTIONS = ['Founder or building my own business','Executive or senior leader','Finance, law, medicine, or professional services','Other high-demand profession'];
 const WORK_LABELS = ['Founder','Executive','Professional','High-Performer'];
+const WEARABLE_OPTIONS = ['No, I do not use one','Oura ring','Apple Watch','WHOOP','Garmin','Fitbit','Samsung Galaxy Watch or Ring','Another wearable'];
 
 // STOP-BANG supplementary questions — shown only if the breathing flag triggers
 const SB_TIRED = { id:'sb_tired', prompt:'Do you often feel tired, fatigued, or sleepy during the daytime, even after what should be enough sleep?', options:[
@@ -391,6 +392,7 @@ function readableResponses() {
     const opt = q.options.find(o => (o.pts !== undefined ? o.pts : o.val) === answers[q.id]);
     out.push({ id: q.id, section: 'Breathing follow-up', question: q.prompt, answer: opt ? opt.label : String(answers[q.id]), points: '' });
   });
+  if (answers.wearableIdx !== undefined) out.push({ id: 'wearable', section: 'About you', question: 'Wearable currently used', answer: WEARABLE_OPTIONS[answers.wearableIdx] || '', points: '' });
   if (answers.sb_heightIn) out.push({ id: 'sb_heightIn', section: 'Breathing follow-up', question: 'Height (inches)', answer: String(answers.sb_heightIn), points: '' });
   if (answers.sb_weightLb) out.push({ id: 'sb_weightLb', section: 'Breathing follow-up', question: 'Weight (pounds)', answer: String(answers.sb_weightLb), points: '' });
   return out;
@@ -420,6 +422,7 @@ function submitToSheet(r) {
     age: answers.age || answers.sb_age || '',
     goal: GOAL_OPTIONS[answers.goalIdx] || '',
     work: WORK_OPTIONS[answers.workIdx] || '',
+    wearable: WEARABLE_OPTIONS[answers.wearableIdx] || '',
     responses: readableResponses(),
     source: EVENT_MODE ? ('event: ' + EVENT_TAG) : 'web'
   };
@@ -441,6 +444,7 @@ BREATHING_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'breathing', q 
 LI_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'li', q }));
 OP_QUESTIONS.forEach(q => screens.push({ type:'q', domain:'op', q }));
 screens.push({ type:'goal', domain:'about' });
+screens.push({ type:'wearable', domain:'about' });
 screens.push({ type:'work', domain:'about' });
 screens.push({ type:'name' });
 // NOTE: what comes after 'work' is decided dynamically at runtime (see goToNextAfterWork)
@@ -668,6 +672,15 @@ function renderScreen(s) {
     return `
       <div class="kicker">Almost There</div>
       <p class="prompt">What's your primary goal right now?</p>
+      <div class="options">${opts}</div>
+      <div class="center-note">Just 3 questions left, then your ZENITH Score.</div>
+    `;
+  }
+  if (s.type === 'wearable') {
+    const opts = WEARABLE_OPTIONS.map((label, i) => `<button class="opt-btn" data-idx="${i}">${label}</button>`).join('');
+    return `
+      <div class="kicker">Almost There</div>
+      <p class="prompt">Are you using a wearable right now? If yes, which one?</p>
       <div class="options">${opts}</div>
       <div class="center-note">Just 2 questions left, then your ZENITH Score.</div>
     `;
@@ -902,6 +915,15 @@ function attachHandlers(s) {
     document.querySelectorAll('.opt-btn').forEach(btn => {
       btn.onclick = () => {
         answers.goalIdx = parseInt(btn.dataset.idx);
+        btn.classList.add('selected');
+        setTimeout(() => { step++; render(); }, 220);
+      };
+    });
+  }
+  if (s.type === 'wearable') {
+    document.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.onclick = () => {
+        answers.wearableIdx = parseInt(btn.dataset.idx);
         btn.classList.add('selected');
         setTimeout(() => { step++; render(); }, 220);
       };
